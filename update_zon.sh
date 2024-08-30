@@ -34,6 +34,8 @@ GIT_URLS=(
     "git+https://github.com/boostorg/predef"
     "git+https://github.com/boostorg/preprocessor"
     "git+https://github.com/boostorg/align"
+
+    ## Add more URLs here
 )
 
 # Loop through each URL

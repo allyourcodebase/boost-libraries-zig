@@ -12,7 +12,7 @@ Make directory and init
 
 ```bash
 $ zig init
-## add zon file boost-libraries-zig
+## add in 'build.zig.zon' boost-libraries-zig package
 $ zig fetch --save=boost git+https://github.com/allyourcodebase/boost-libraries-zig
 ```
 Add in **build.zig**
@@ -32,7 +32,9 @@ pub fn build(b: *std.Build) !void {
     for(boost_artifact.root_module.include_dirs.items) |include_dir| {
         try exe.root_module.include_dirs.append(b.allocator, include_dir);
     }
-    exe.linklibrary(boost_artifact);
+
+    // your build
+    [exe|lib].linkLibrary(boost_artifact);
 }
 ```
 
