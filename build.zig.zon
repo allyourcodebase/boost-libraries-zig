@@ -210,6 +210,18 @@
             .url = "git+https://github.com/boostorg/any#boost-1.86.0",
             .hash = "122072700052d2d33b45d17400e68c3658a71721890611f0a0adb5e82fbaa2d5b187",
         },
+        .integer = .{
+            .url = "git+https://github.com/boostorg/integer#boost-1.86.0",
+            .hash = "12200c5057e038ca6be7ca5c6847b6fbe72da5e495cc2fb04c9e1413329452a391d4",
+        },
+        .array = .{
+            .url = "git+https://github.com/boostorg/array#boost-1.86.0",
+            .hash = "12203c33dbf4c4d67afaa087cd9b5e3130da97c00c50cf56906a0266eeae2998641a",
+        },
+        .multi_array = .{
+            .url = "git+https://github.com/boostorg/multi_array#boost-1.86.0",
+            .hash = "1220871e233a05ee79c380dff922c83b20f4c738ab8e347c3c804d1c89430cb06ad6",
+        },
     },
     .paths = .{""},
 }

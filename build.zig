@@ -32,6 +32,9 @@ const boost_libs = [_][]const u8{
     "outcome",
     "bind",
     "pfr",
+    "array",
+    "multi_array",
+    "integer",
     "graph",
     "optional",
     "date_time",
@@ -92,7 +95,7 @@ pub fn boostLibraries(b: *std.Build, config: Config) *std.Build.Step.Compile {
     if (config.header_only) {
         // zig-pkg bypass (artifact need source file)
         const empty = b.addWriteFile("empty.cc",
-        \\ #include <boost/config.hpp>
+            \\ #include <boost/config.hpp>
         );
         lib.step.dependOn(&empty.step);
         lib.addCSourceFiles(.{
