@@ -39,7 +39,11 @@ const boost_libs = [_][]const u8{
     "optional",
     "date_time",
     "mysql",
-    "compute",
+    "compute", // need OpenCL
+    "odeint",
+    "ublas",
+    "serialization",
+    "iostreams",
     "safe_numerics",
     "smart_ptr",
     "math",
@@ -52,6 +56,9 @@ const boost_libs = [_][]const u8{
     "io",
     "json",
     "type_index",
+    "type_erasure",
+    "typeof",
+    "units",
     "timer",
     "stacktrace",
     "sort",
@@ -73,6 +80,7 @@ const boost_libs = [_][]const u8{
     "fusion",
     "function",
     "spirit",
+    "function_types",
     "cobalt",
     "phoenix",
     "nowide",
@@ -86,6 +94,7 @@ const boost_libs = [_][]const u8{
     "tokenizer",
     "geometry",
     "crc",
+    "callable_traits",
     "compat",
     "bimap",
 };
@@ -97,7 +106,7 @@ pub fn build(b: *std.Build) !void {
     const boost = boostLibraries(b, .{
         .target = target,
         .optimize = optimize,
-        .header_only = b.option(bool, "headers-only", "Build header-only libraries") orelse true,
+        .header_only = b.option(bool, "headers-only", "Build header-only libraries (default: true)") orelse true,
     });
     b.installArtifact(boost);
 }
@@ -106,7 +115,7 @@ const cxxFlags: []const []const u8 = &.{
     "-Wall",
     "-Wextra",
     "-Wpedantic",
-    "-std=c++17",
+    "-Wformat",
 };
 
 const boost_version: std.SemanticVersion = .{ .major = 0, .minor = 86, .patch = 0 };
@@ -136,6 +145,7 @@ pub fn boostLibraries(b: *std.Build, config: Config) *std.Build.Step.Compile {
             .flags = cxxFlags,
         });
     } else {
+        // WIP
         const boostJson = b.dependency("json", .{}).path("");
         const boostContainer = b.dependency("container", .{}).path("");
         lib.addCSourceFiles(.{

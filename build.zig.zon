@@ -350,6 +350,42 @@
             .url = "git+https://github.com/boostorg/parameter#boost-1.86.0",
             .hash = "122053c2d2c58149a0a1a84491b6a7dbb156d6cf3410d7e04a6683ca2671611bf578",
         },
+        .callable_traits = .{
+            .url = "git+https://github.com/boostorg/callable_traits#boost-1.86.0",
+            .hash = "1220a956282e6fb69220481426884bce23895c3981de280c3fb33c80271a63ee6647",
+        },
+        .odeint = .{
+            .url = "git+https://github.com/boostorg/odeint#boost-1.86.0",
+            .hash = "1220e863b9cb75d3f1d5cad9bd5ad59f5e5083dbc72b8bd7c2afbe696699e191bbb4",
+        },
+        .ublas = .{
+            .url = "git+https://github.com/boostorg/ublas#boost-1.86.0",
+            .hash = "122023a13199b57fea71f87a8500ccd9c6e445b3d70fb7f1bbc858a7efb138b18d79",
+        },
+        .serialization = .{
+            .url = "git+https://github.com/boostorg/serialization#boost-1.86.0",
+            .hash = "1220ece5d24e3f2900bd4f06ec99042eb1a773b0b4303e1e785c640e54aecdc3c6c5",
+        },
+        .iostreams = .{
+            .url = "git+https://github.com/boostorg/iostreams#boost-1.86.0",
+            .hash = "1220f9afc0c9fcab849cd746877887ea9616f5f4b1853bf473301d105c1032a839b3",
+        },
+        .type_erasure = .{
+            .url = "git+https://github.com/boostorg/type_erasure#boost-1.86.0",
+            .hash = "1220816eff54217c0608bbbf4fbfd98474452f8f41cfdbccab3ef4c8dc94a24677c0",
+        },
+        .typeof = .{
+            .url = "git+https://github.com/boostorg/typeof#boost-1.86.0",
+            .hash = "1220f40340f02be8e64048c4bc60dd0eac40b19d7e433f71d1ce00b2a12beabf54db",
+        },
+        .units = .{
+            .url = "git+https://github.com/boostorg/units#boost-1.86.0",
+            .hash = "1220e483898c1488946a2a6e721df4696ed341dc72e21084d97edee0db7cdc22f3b2",
+        },
+        .function_types = .{
+            .url = "git+https://github.com/boostorg/function_types#boost-1.86.0",
+            .hash = "1220f599b1bb1592228351732048027d2ada614198be92c4972fc3fe811a698201ce",
+        },
     },
     .paths = .{""},
 }

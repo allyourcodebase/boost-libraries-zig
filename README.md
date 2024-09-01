@@ -25,7 +25,8 @@ pub fn build(b: *std.Build) !void {
     const boost_dep = b.dependency("boost", .{
         .target = target,
         .optimize = optimize,
-        .@"headers-only" = true,
+        // default is true (recommended)
+        // .@"headers-only" = false,
     });
     const boost_artifact = boost_dep.artifact("boost");
 

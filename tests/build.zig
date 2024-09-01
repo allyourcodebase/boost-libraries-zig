@@ -7,17 +7,20 @@ pub fn build(b: *std.Build) void {
     const boost_dep = b.dependency("boost", .{
         .target = target,
         .optimize = optimize,
+        // .@"headers-only" = false, // need link-library artifact
     });
 
-    buildTests(b, .{
-        .target = target,
-        .optimize = optimize,
-        .files = &.{
-            "include_all.cc",
-        },
-        .name = "include_tests",
-        .dependency = boost_dep,
-    });
+    inline for (&.{
+        "include_all.cc",
+    }) |file| {
+        buildTests(b, .{
+            .target = target,
+            .optimize = optimize,
+            .files = &.{file},
+            .name = b.fmt("test_{s}", .{file[0 .. file.len - 3]}),
+            .dependency = boost_dep,
+        });
+    }
 }
 fn buildTests(b: *std.Build, options: struct {
     target: std.Build.ResolvedTarget,
@@ -37,13 +40,18 @@ fn buildTests(b: *std.Build, options: struct {
         for (artifact.root_module.include_dirs.items) |include_dir| {
             exe.root_module.include_dirs.append(b.allocator, include_dir) catch unreachable;
         }
+        // if not header-only, link library
         // exe.linkLibrary(artifact);
     }
 
     for (options.files) |file| {
         exe.addCSourceFile(.{
             .file = b.path(file),
-            .flags = &.{"-std=c++20"},
+            .flags = &.{
+                "-std=c++20", "-Wall",
+                "-Wextra",    "-Wpedantic",
+                "-Wformat",
+            },
         });
     }
     if (exe.rootModuleTarget().abi != .msvc) {
@@ -58,6 +66,6 @@ fn buildTests(b: *std.Build, options: struct {
 
     b.installArtifact(exe);
     const run_cmd = b.addRunArtifact(exe);
-    const run_step = b.step("run", b.fmt("Run the {s}", .{exe.name}));
+    const run_step = b.step(exe.name, b.fmt("Run the {s}", .{exe.name}));
     run_step.dependOn(&run_cmd.step);
 }

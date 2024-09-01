@@ -91,6 +91,15 @@ GIT_URLS=(
   "git+https://github.com/boostorg/bimap#$BOOST_VERSION"
   "git+https://github.com/boostorg/tokenizer#$BOOST_VERSION"
   "git+https://github.com/boostorg/parameter#$BOOST_VERSION"
+  "git+https://github.com/boostorg/callable_traits#$BOOST_VERSION"
+  "git+https://github.com/boostorg/odeint#$BOOST_VERSION"
+  "git+https://github.com/boostorg/ublas#$BOOST_VERSION"
+  "git+https://github.com/boostorg/serialization#$BOOST_VERSION"
+  "git+https://github.com/boostorg/iostreams#$BOOST_VERSION"
+  "git+https://github.com/boostorg/type_erasure#$BOOST_VERSION"
+  "git+https://github.com/boostorg/typeof#$BOOST_VERSION"
+  "git+https://github.com/boostorg/units#$BOOST_VERSION"
+  "git+https://github.com/boostorg/function_types#$BOOST_VERSION"
 
   ## Add more URLs here
 )
