@@ -51,5 +51,9 @@ fn buildTests(b: *std.Build, options: struct {
         exe.linkLibC();
     }
 
+    // for boost::asio/boost::beast
+    if (exe.rootModuleTarget().os.tag == .windows)
+        exe.linkSystemLibrary("ws2_32");
+
     b.installArtifact(exe);
 }
