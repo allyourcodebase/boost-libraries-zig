@@ -43,6 +43,7 @@ fn buildTests(b: *std.Build, options: struct {
     for (options.files) |file| {
         exe.addCSourceFile(.{
             .file = b.path(file),
+            .flags = &.{"-std=c++20"},
         });
     }
     if (exe.rootModuleTarget().abi != .msvc) {
@@ -56,4 +57,7 @@ fn buildTests(b: *std.Build, options: struct {
         exe.linkSystemLibrary("ws2_32");
 
     b.installArtifact(exe);
+    const run_cmd = b.addRunArtifact(exe);
+    const run_step = b.step("run", b.fmt("Run the {s}", .{exe.name}));
+    run_step.dependOn(&run_cmd.step);
 }
