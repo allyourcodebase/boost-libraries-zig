@@ -32,9 +32,6 @@ pub fn build(b: *std.Build) !void {
     for(boost_artifact.root_module.include_dirs.items) |include_dir| {
         try exe.root_module.include_dirs.append(b.allocator, include_dir);
     }
-
-    // your build
-    [exe|lib].linkLibrary(boost_artifact);
 }
 ```
 

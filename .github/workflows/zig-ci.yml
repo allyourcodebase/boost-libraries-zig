@@ -30,4 +30,4 @@ jobs:
           fetch-depth: 0
       - uses: mlugg/setup-zig@v1
       - name: Build Summary ${{ matrix.targets }}
-        run: zig build --summary all -freference-trace -Dtarget=${{ matrix.targets }}
+        run: zig build --build-file $PWD/tests/build.zig --summary all -freference-trace -Dtarget=${{ matrix.targets }}

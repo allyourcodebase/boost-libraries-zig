@@ -1,0 +1,10 @@
+.{
+    .name = "tests",
+    .version = "0.0.0",
+    .dependencies = .{
+        .boost = .{
+            .path = "..",
+        },
+    },
+    .paths = .{""},
+}
