@@ -1,10 +1,11 @@
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
+
 #include <boost/algorithm/algorithm.hpp>
 #include <boost/any.hpp>
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/callable_traits.hpp>
-#include <boost/cobalt.hpp>
 #include <boost/config.hpp>
 #include <boost/crc.hpp>
 #include <boost/date_time.hpp>
@@ -13,7 +14,6 @@
 #include <boost/multi_array.hpp>
 #include <boost/numeric/odeint.hpp>
 #include <boost/pfr.hpp>
-#include <boost/process.hpp>
 #include <boost/safe_numerics/safe_integer.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/signals2.hpp>

@@ -54,7 +54,7 @@ const boost_libs = [_][]const u8{
     "unordered",
     "static_string",
     "io",
-    "json",
+    "json", // (no header-only)
     "type_index",
     "type_erasure",
     "typeof",
@@ -62,11 +62,11 @@ const boost_libs = [_][]const u8{
     "timer",
     "stacktrace",
     "sort",
-    "filesystem",
-    "context",
+    "filesystem", // no header-only
+    "context", // cpp + asm (no header-only)
     "signals2",
     "interprocess",
-    "container",
+    "container", // no header-only
     "variant",
     "variant2",
     "winapi",
@@ -81,7 +81,7 @@ const boost_libs = [_][]const u8{
     "function",
     "spirit",
     "function_types",
-    "cobalt",
+    "cobalt", // need boost.context & boost.asio (no header-only)
     "phoenix",
     "nowide",
     "locale",
@@ -94,9 +94,18 @@ const boost_libs = [_][]const u8{
     "tokenizer",
     "geometry",
     "crc",
+    "hof",
+    "interval",
+    "local_function",
     "callable_traits",
     "compat",
     "bimap",
+    "conversion",
+    "charconv",
+    "log",
+    "heap",
+    "msm",
+    "coroutine2", // need boost.context (no header-only)
 };
 
 pub fn build(b: *std.Build) !void {
@@ -169,8 +178,10 @@ pub fn boostLibraries(b: *std.Build, config: Config) *std.Build.Step.Compile {
     }
     if (lib.rootModuleTarget().abi == .msvc)
         lib.linkLibC()
-    else
+    else {
+        lib.defineCMacro("_GNU_SOURCE", null);
         lib.linkLibCpp();
+    }
     return lib;
 }
 

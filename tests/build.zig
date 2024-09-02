@@ -48,14 +48,17 @@ fn buildTests(b: *std.Build, options: struct {
         exe.addCSourceFile(.{
             .file = b.path(file),
             .flags = &.{
-                "-std=c++20", "-Wall",
-                "-Wextra",    "-Wpedantic",
+                "-std=c++20",
+                "-Wall",
+                "-Wextra",
+                "-Wpedantic",
                 "-Wformat",
             },
         });
     }
     if (exe.rootModuleTarget().abi != .msvc) {
         exe.linkLibCpp();
+        exe.defineCMacro("_GNU_SOURCE", null);
     } else {
         exe.linkLibC();
     }

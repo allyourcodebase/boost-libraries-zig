@@ -100,6 +100,15 @@ GIT_URLS=(
   "git+https://github.com/boostorg/typeof#$BOOST_VERSION"
   "git+https://github.com/boostorg/units#$BOOST_VERSION"
   "git+https://github.com/boostorg/function_types#$BOOST_VERSION"
+  "git+https://github.com/boostorg/hof#$BOOST_VERSION"
+  "git+https://github.com/boostorg/interval#$BOOST_VERSION"
+  "git+https://github.com/boostorg/local_function#$BOOST_VERSION"
+  "git+https://github.com/boostorg/log#$BOOST_VERSION"
+  "git+https://github.com/boostorg/charconv#$BOOST_VERSION"
+  "git+https://github.com/boostorg/conversion#$BOOST_VERSION"
+  "git+https://github.com/boostorg/heap#$BOOST_VERSION"
+  "git+https://github.com/boostorg/msm#$BOOST_VERSION"
+  "git+https://github.com/boostorg/coroutine2#$BOOST_VERSION"
 
   ## Add more URLs here
 )

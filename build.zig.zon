@@ -386,6 +386,42 @@
             .url = "git+https://github.com/boostorg/function_types#boost-1.86.0",
             .hash = "1220f599b1bb1592228351732048027d2ada614198be92c4972fc3fe811a698201ce",
         },
+        .hof = .{
+            .url = "git+https://github.com/boostorg/hof#boost-1.86.0",
+            .hash = "122037bcf50bf4efff438cb79b5f772fab327204bd274dca073b26a61b5c2aedce64",
+        },
+        .interval = .{
+            .url = "git+https://github.com/boostorg/interval#boost-1.86.0",
+            .hash = "12209e07aff7ae68cdab4bac7c8fd385ce4f60a16e216b83f25ea2e23fda2c13cb7a",
+        },
+        .local_function = .{
+            .url = "git+https://github.com/boostorg/local_function#boost-1.86.0",
+            .hash = "1220ede64f13a619d5c1aeaf0029fd4a330563eb23c756c77b28679620b1758bb167",
+        },
+        .log = .{
+            .url = "git+https://github.com/boostorg/log#boost-1.86.0",
+            .hash = "122047b497d7a5cd30b383c17eb2d79e82256a87153b037048b4a520cc8ed23b5e4b",
+        },
+        .charconv = .{
+            .url = "git+https://github.com/boostorg/charconv#boost-1.86.0",
+            .hash = "12201ef391b90782296ba73b941038d7fb050cda2e6dd89c8547067c6c96548b967e",
+        },
+        .conversion = .{
+            .url = "git+https://github.com/boostorg/conversion#boost-1.86.0",
+            .hash = "12202fb2565a71313d2528944c2d24cd310322acdb6f37fe8a17f3dcd84d54f4e06b",
+        },
+        .heap = .{
+            .url = "git+https://github.com/boostorg/heap#boost-1.86.0",
+            .hash = "12204ae3e10fd18b59f286e7f7aebd7ef34455aea9d780d28eba28c1707bf89a246e",
+        },
+        .msm = .{
+            .url = "git+https://github.com/boostorg/msm#boost-1.86.0",
+            .hash = "1220af97e5583ec57181cf7db6d7e8b8e781c80a5befb9cd4300758007faf5b2ddd0",
+        },
+        .coroutine2 = .{
+            .url = "git+https://github.com/boostorg/coroutine2#boost-1.86.0",
+            .hash = "1220493d37eb17822028b1ec196eed9e5d92ef5549cc1a893cccc216406afdb06207",
+        },
     },
     .paths = .{""},
 }
