@@ -115,7 +115,15 @@ pub fn build(b: *std.Build) !void {
     const boost = boostLibraries(b, .{
         .target = target,
         .optimize = optimize,
-        .header_only = b.option(bool, "headers-only", "Build header-only libraries (default: true)") orelse true,
+        .header_only = b.option(bool, "headers-only", "Build headers-only libraries (default: true)") orelse true,
+        .module = .{
+            .cobalt = b.option(bool, "cobalt", "Build cobalt library (default: false)") orelse false,
+            .context = b.option(bool, "context", "Build context library (default: false)") orelse false,
+            .json = b.option(bool, "json", "Build json library (default: false)") orelse false,
+            .container = b.option(bool, "container", "Build container library (default: false)") orelse false,
+            .filesystem = b.option(bool, "filesystem", "Build filesystem library (default: false)") orelse false,
+            .coroutine2 = b.option(bool, "coroutine2", "Build coroutine2 library (default: false)") orelse false,
+        },
     });
     b.installArtifact(boost);
 }
@@ -127,7 +135,7 @@ const cxxFlags: []const []const u8 = &.{
     "-Wformat",
 };
 
-const boost_version: std.SemanticVersion = .{ .major = 0, .minor = 86, .patch = 0 };
+const boost_version: std.SemanticVersion = .{ .major = 1, .minor = 86, .patch = 0 };
 
 pub fn boostLibraries(b: *std.Build, config: Config) *std.Build.Step.Compile {
     const lib = b.addStaticLibrary(.{
@@ -154,27 +162,35 @@ pub fn boostLibraries(b: *std.Build, config: Config) *std.Build.Step.Compile {
             .flags = cxxFlags,
         });
     } else {
-        // WIP
-        const boostJson = b.dependency("json", .{}).path("");
-        const boostContainer = b.dependency("container", .{}).path("");
-        lib.addCSourceFiles(.{
-            .root = boostContainer,
-            .files = &.{
-                "src/pool_resource.cpp",
-                "src/monotonic_buffer_resource.cpp",
-                "src/synchronized_pool_resource.cpp",
-                "src/unsynchronized_pool_resource.cpp",
-                "src/global_resource.cpp",
-            },
-            .flags = cxxFlags,
-        });
-        lib.addCSourceFiles(.{
-            .root = boostJson,
-            .files = &.{
-                "src/src.cpp",
-            },
-            .flags = cxxFlags,
-        });
+        if (config.module) |module| {
+            if (module.cobalt) {
+                const boostCobalt = buildCobalt(b, .{
+                    .header_only = config.header_only,
+                    .target = config.target,
+                    .optimize = config.optimize,
+                    .include_dirs = lib.root_module.include_dirs,
+                });
+                lib.addObject(boostCobalt);
+            }
+            if (module.container) {
+                const boostContainer = buildContainer(b, .{
+                    .header_only = config.header_only,
+                    .target = config.target,
+                    .optimize = config.optimize,
+                    .include_dirs = lib.root_module.include_dirs,
+                });
+                lib.addObject(boostContainer);
+            }
+            if (module.json) {
+                const boostJson = buildJson(b, .{
+                    .header_only = config.header_only,
+                    .target = config.target,
+                    .optimize = config.optimize,
+                    .include_dirs = lib.root_module.include_dirs,
+                });
+                lib.addObject(boostJson);
+            }
+        }
     }
     if (lib.rootModuleTarget().abi == .msvc)
         lib.linkLibC()
@@ -189,4 +205,118 @@ pub const Config = struct {
     header_only: bool,
     target: std.Build.ResolvedTarget,
     optimize: std.builtin.OptimizeMode,
+    module: ?boostLibrariesModules = null,
+    include_dirs: ?std.ArrayListUnmanaged(std.Build.Module.IncludeDir) = null,
 };
+
+// No header-only libraries
+const boostLibrariesModules = struct {
+    coroutine2: bool = false,
+    context: bool = false,
+    json: bool = false,
+    container: bool = false,
+    filesystem: bool = false,
+    cobalt: bool = false,
+};
+
+fn buildCobalt(b: *std.Build, config: Config) *std.Build.Step.Compile {
+    const cobaltPath = b.dependency("cobalt", .{}).path("");
+    const obj = b.addObject(.{
+        .name = "cobalt",
+        .target = config.target,
+        .optimize = config.optimize,
+    });
+
+    if (config.include_dirs) |include_dirs| {
+        for (include_dirs.items) |include| {
+            obj.root_module.include_dirs.append(b.allocator, include) catch unreachable;
+        }
+    }
+    obj.defineCMacro("BOOST_COBALT_SOURCE", null);
+    obj.defineCMacro("BOOST_COBALT_USE_BOOST_CONTAINER_PMR", null);
+    obj.addCSourceFiles(.{
+        .root = cobaltPath,
+        .files = &.{
+            "src/channel.cpp",
+            "src/detail/exception.cpp",
+            "src/detail/util.cpp",
+            "src/error.cpp",
+            "src/main.cpp",
+            "src/this_thread.cpp",
+            "src/thread.cpp",
+        },
+        .flags = cxxFlags ++ &[_][]const u8{"-std=c++20"},
+    });
+    if (obj.rootModuleTarget().abi == .msvc)
+        obj.linkLibC()
+    else {
+        obj.defineCMacro("_GNU_SOURCE", null);
+        obj.linkLibCpp();
+    }
+
+    return obj;
+}
+
+fn buildContainer(b: *std.Build, config: Config) *std.Build.Step.Compile {
+    const containerPath = b.dependency("container", .{}).path("");
+    const obj = b.addObject(.{
+        .name = "container",
+        .target = config.target,
+        .optimize = config.optimize,
+    });
+
+    if (config.include_dirs) |include_dirs| {
+        for (include_dirs.items) |include| {
+            obj.root_module.include_dirs.append(b.allocator, include) catch unreachable;
+        }
+    }
+    obj.addCSourceFiles(.{
+        .root = containerPath,
+        .files = &.{
+            "src/pool_resource.cpp",
+            "src/monotonic_buffer_resource.cpp",
+            "src/synchronized_pool_resource.cpp",
+            "src/unsynchronized_pool_resource.cpp",
+            "src/global_resource.cpp",
+        },
+        .flags = cxxFlags,
+    });
+    if (obj.rootModuleTarget().abi == .msvc)
+        obj.linkLibC()
+    else {
+        obj.defineCMacro("_GNU_SOURCE", null);
+        obj.linkLibCpp();
+    }
+
+    return obj;
+}
+
+fn buildJson(b: *std.Build, config: Config) *std.Build.Step.Compile {
+    const jsonPath = b.dependency("json", .{}).path("");
+    const obj = b.addObject(.{
+        .name = "json",
+        .target = config.target,
+        .optimize = config.optimize,
+    });
+
+    if (config.include_dirs) |include_dirs| {
+        for (include_dirs.items) |include| {
+            obj.root_module.include_dirs.append(b.allocator, include) catch unreachable;
+        }
+    }
+    obj.addCSourceFiles(.{
+        .root = jsonPath,
+        .files = &.{
+            "src/src.cpp",
+        },
+        .flags = cxxFlags,
+    });
+    if (obj.rootModuleTarget().abi == .msvc)
+        obj.linkLibC()
+    else {
+        obj.defineCMacro("_GNU_SOURCE", null);
+        obj.linkLibCpp();
+    }
+
+    return obj;
+}

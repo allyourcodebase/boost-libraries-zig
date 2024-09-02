@@ -8,6 +8,14 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
         // .@"headers-only" = false, // need link-library artifact
+
+        // need disable header-only
+        .cobalt = true,
+        .container = true,
+        .context = false,
+        .coroutine2 = false,
+        .filesystem = false,
+        .json = true,
     });
 
     inline for (&.{
@@ -41,7 +49,7 @@ fn buildTests(b: *std.Build, options: struct {
             exe.root_module.include_dirs.append(b.allocator, include_dir) catch unreachable;
         }
         // if not header-only, link library
-        // exe.linkLibrary(artifact);
+        exe.linkLibrary(artifact);
     }
 
     for (options.files) |file| {
