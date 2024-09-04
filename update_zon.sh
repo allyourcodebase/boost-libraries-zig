@@ -117,6 +117,8 @@ GIT_URLS=(
   "git+https://github.com/boostorg/exception#$BOOST_VERSION"
   "git+https://github.com/boostorg/multi_index#$BOOST_VERSION"
   "git+https://github.com/boostorg/random#$BOOST_VERSION"
+  "git+https://github.com/boostorg/dll#$BOOST_VERSION"
+  "git+https://github.com/boostorg/multiprecision#$BOOST_VERSION"
 
   ## Add more URLs here
 )

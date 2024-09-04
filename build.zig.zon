@@ -454,6 +454,14 @@
             .url = "git+https://github.com/boostorg/random#boost-1.86.0",
             .hash = "12207b79d0d1acba812181283a2bab056e863ae7bbebb2b6c003836536be8e00921c",
         },
+        .dll = .{
+            .url = "git+https://github.com/boostorg/dll#boost-1.86.0",
+            .hash = "1220e46cc6db3ea533d2b74e70c13e41b328b7466c4e088779ff554459ddf98a7cf9",
+        },
+        .multiprecision = .{
+            .url = "git+https://github.com/boostorg/multiprecision#boost-1.86.0",
+            .hash = "12200ebfce9b83b9617018a985bbcec75999ea628f438bd7ad9912af5ba795e5411a",
+        },
     },
     .paths = .{""},
 }

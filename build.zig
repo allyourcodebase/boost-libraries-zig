@@ -116,7 +116,7 @@ const boost_libs = [_][]const u8{
     "coroutine2", // need boost.context
 };
 
-pub fn build(b: *std.Build) !void {
+pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
@@ -124,6 +124,7 @@ pub fn build(b: *std.Build) !void {
         .target = target,
         .optimize = optimize,
         .module = .{
+            .atomic = b.option(bool, "atomic", "Build boost.atomic library (default: false)") orelse false,
             .charconv = b.option(bool, "charconv", "Build boost.charconv library (default: false)") orelse false,
             .cobalt = b.option(bool, "cobalt", "Build boost.cobalt library (default: false)") orelse false,
             .container = b.option(bool, "container", "Build boost.container library (default: false)") orelse false,
@@ -136,8 +137,12 @@ pub fn build(b: *std.Build) !void {
             .log = b.option(bool, "log", "Build boost.log library (default: false)") orelse false,
             .process = b.option(bool, "process", "Build boost.process library (default: false)") orelse false,
             .random = b.option(bool, "random", "Build boost.random library (default: false)") orelse false,
+            .regex = b.option(bool, "regex", "Build boost.regex library (default: false)") orelse false,
             .serialization = b.option(bool, "serialization", "Build boost.serialization library (default: false)") orelse false,
+            .stacktrace = b.option(bool, "stacktrace", "Build boost.stacktrace library (default: false)") orelse false,
             .system = b.option(bool, "system", "Build boost.system library (default: false)") orelse false,
+            .url = b.option(bool, "url", "Build boost.url library (default: false)") orelse false,
+            .wave = b.option(bool, "wave", "Build boost.wave library (default: false)") orelse false,
         },
     });
     b.installArtifact(boost);
@@ -183,6 +188,9 @@ pub fn boostLibraries(b: *std.Build, config: Config) *std.Build.Step.Compile {
         .flags = cxxFlags,
     });
     if (config.module) |module| {
+        if (module.atomic) {
+            buildAtomic(b, lib);
+        }
         if (module.cobalt) {
             buildCobalt(b, lib);
         }
@@ -225,6 +233,18 @@ pub fn boostLibraries(b: *std.Build, config: Config) *std.Build.Step.Compile {
         if (module.system) {
             buildSystem(b, lib);
         }
+        if (module.stacktrace) {
+            buildStacktrace(b, lib);
+        }
+        if (module.regex) {
+            buildRegex(b, lib);
+        }
+        if (module.url) {
+            buildURL(b, lib);
+        }
+        if (module.wave) {
+            buildWave(b, lib);
+        }
     }
     if (lib.rootModuleTarget().abi == .msvc)
         lib.linkLibC()
@@ -243,6 +263,7 @@ pub const Config = struct {
 
 // No header-only libraries
 const boostLibrariesModules = struct {
+    atomic: bool = false,
     charconv: bool = false,
     cobalt: bool = false,
     container: bool = false,
@@ -255,8 +276,12 @@ const boostLibrariesModules = struct {
     log: bool = false,
     process: bool = false,
     random: bool = false,
+    regex: bool = false,
+    stacktrace: bool = false,
     serialization: bool = false,
     system: bool = false,
+    url: bool = false,
+    wave: bool = false,
 };
 
 fn buildCobalt(b: *std.Build, obj: *std.Build.Step.Compile) void {
@@ -368,6 +393,58 @@ fn buildSystem(b: *std.Build, obj: *std.Build.Step.Compile) void {
         .root = systemPath,
         .files = &.{
             "error_code.cpp",
+        },
+        .flags = cxxFlags,
+    });
+}
+
+fn buildAtomic(b: *std.Build, obj: *std.Build.Step.Compile) void {
+    const atomicPath = b.dependency("atomic", .{}).path("src");
+
+    obj.addIncludePath(atomicPath);
+    obj.addCSourceFiles(.{
+        .root = atomicPath,
+        .files = &.{
+            "lock_pool.cpp",
+        },
+        .flags = cxxFlags,
+    });
+    if (obj.rootModuleTarget().os.tag == .windows)
+        obj.addCSourceFiles(.{
+            .root = atomicPath,
+            .files = &.{
+                "wait_on_address.cpp",
+            },
+            .flags = cxxFlags,
+        });
+    if (std.Target.x86.featureSetHas(obj.rootModuleTarget().cpu.features, .sse2)) {
+        obj.addCSourceFiles(.{
+            .root = atomicPath,
+            .files = &.{
+                "find_address_sse2.cpp",
+            },
+            .flags = cxxFlags,
+        });
+    }
+    if (std.Target.x86.featureSetHas(obj.rootModuleTarget().cpu.features, .sse4_1)) {
+        obj.addCSourceFiles(.{
+            .root = atomicPath,
+            .files = &.{
+                "find_address_sse41.cpp",
+            },
+            .flags = cxxFlags,
+        });
+    }
+}
+
+fn buildRegex(b: *std.Build, obj: *std.Build.Step.Compile) void {
+    const regPath = b.dependency("regex", .{}).path("src");
+
+    obj.addCSourceFiles(.{
+        .root = regPath,
+        .files = &.{
+            "posix_api.cpp",
+            "wide_posix_api.cpp",
         },
         .flags = cxxFlags,
     });
@@ -664,6 +741,125 @@ fn buildException(b: *std.Build, obj: *std.Build.Step.Compile) void {
     });
 }
 
+fn buildStacktrace(b: *std.Build, obj: *std.Build.Step.Compile) void {
+    const stackPath = b.dependency("stacktrace", .{}).path("src");
+
+    obj.addIncludePath(stackPath);
+    obj.addCSourceFiles(.{
+        .root = stackPath,
+        .files = &.{
+            "addr2line.cpp",
+            "basic.cpp",
+            "from_exception.cpp",
+            "noop.cpp",
+        },
+        .flags = cxxFlags,
+    });
+    // TODO: fix https://github.com/ziglang/zig/issues/21308
+    // if (obj.dependsOnSystemLibrary("backtrace")) {
+    //     obj.addCSourceFiles(.{
+    //         .root = stackPath,
+    //         .files = &.{
+    //             "backtrace.cpp",
+    //         },
+    //         .flags = cxxFlags,
+    //     });
+    //     obj.linkSystemLibrary("backtrace");
+    // }
+
+    if (obj.rootModuleTarget().abi == .msvc) {
+        obj.addCSourceFiles(.{
+            .root = stackPath,
+            .files = &.{
+                "windbg.cpp",
+                "windbg_cached.cpp",
+            },
+            .flags = cxxFlags,
+        });
+
+        obj.linkSystemLibrary("dbgeng");
+        obj.linkSystemLibrary("ole32");
+    }
+}
+
+fn buildURL(b: *std.Build, obj: *std.Build.Step.Compile) void {
+    const urlPath = b.dependency("url", .{}).path("src");
+
+    obj.addCSourceFiles(.{
+        .root = urlPath,
+        .files = &.{
+            "authority_view.cpp",
+            "decode_view.cpp",
+            "detail/any_params_iter.cpp",
+            "detail/any_segments_iter.cpp",
+            "detail/decode.cpp",
+            "detail/except.cpp",
+            "detail/format_args.cpp",
+            "detail/normalize.cpp",
+            "detail/params_iter_impl.cpp",
+            "detail/pattern.cpp",
+            "detail/pct_format.cpp",
+            "detail/replacement_field_rule.cpp",
+            "detail/segments_iter_impl.cpp",
+            "detail/url_impl.cpp",
+            "detail/vformat.cpp",
+            "encoding_opts.cpp",
+            "error.cpp",
+            "grammar/ci_string.cpp",
+            "grammar/dec_octet_rule.cpp",
+            "grammar/delim_rule.cpp",
+            "grammar/detail/recycled.cpp",
+            "grammar/error.cpp",
+            "grammar/literal_rule.cpp",
+            "grammar/string_view_base.cpp",
+            "ipv4_address.cpp",
+            "ipv6_address.cpp",
+            "params_base.cpp",
+            "params_encoded_base.cpp",
+            "params_encoded_ref.cpp",
+            "params_encoded_view.cpp",
+            "params_ref.cpp",
+            "params_view.cpp",
+            "parse.cpp",
+            "parse_path.cpp",
+            "parse_query.cpp",
+            "pct_string_view.cpp",
+            "rfc/absolute_uri_rule.cpp",
+            "rfc/authority_rule.cpp",
+            "rfc/detail/h16_rule.cpp",
+            "rfc/detail/hier_part_rule.cpp",
+            "rfc/detail/host_rule.cpp",
+            "rfc/detail/ip_literal_rule.cpp",
+            "rfc/detail/ipv6_addrz_rule.cpp",
+            "rfc/detail/ipvfuture_rule.cpp",
+            "rfc/detail/port_rule.cpp",
+            "rfc/detail/relative_part_rule.cpp",
+            "rfc/detail/scheme_rule.cpp",
+            "rfc/detail/userinfo_rule.cpp",
+            "rfc/ipv4_address_rule.cpp",
+            "rfc/ipv6_address_rule.cpp",
+            "rfc/origin_form_rule.cpp",
+            "rfc/query_rule.cpp",
+            "rfc/relative_ref_rule.cpp",
+            "rfc/uri_reference_rule.cpp",
+            "rfc/uri_rule.cpp",
+            "scheme.cpp",
+            "segments_base.cpp",
+            "segments_encoded_base.cpp",
+            "segments_encoded_ref.cpp",
+            "segments_encoded_view.cpp",
+            "segments_ref.cpp",
+            "segments_view.cpp",
+            "static_url.cpp",
+            "url.cpp",
+            "url_base.cpp",
+            "url_view.cpp",
+            "url_view_base.cpp",
+        },
+        .flags = cxxFlags,
+    });
+}
+
 fn buildIOStreams(b: *std.Build, obj: *std.Build.Step.Compile) void {
     const iostreamPath = b.dependency("iostreams", .{}).path("src");
 
@@ -752,6 +948,29 @@ fn buildLog(b: *std.Build, obj: *std.Build.Step.Compile) void {
                 "posix/ipc_reliable_message_queue.cpp",
                 "posix/object_name.cpp",
             },
+        },
+        .flags = cxxFlags,
+    });
+}
+
+fn buildWave(b: *std.Build, obj: *std.Build.Step.Compile) void {
+    const wavePath = b.dependency("wave", .{}).path("src");
+
+    obj.addCSourceFiles(.{
+        .root = wavePath,
+        .files = &.{
+            "cpplexer/re2clex/aq.cpp",
+            "cpplexer/re2clex/cpp_re.cpp",
+            "instantiate_cpp_exprgrammar.cpp",
+            "instantiate_cpp_grammar.cpp",
+            "instantiate_cpp_literalgrs.cpp",
+            "instantiate_defined_grammar.cpp",
+            "instantiate_has_include_grammar.cpp",
+            "instantiate_predef_macros.cpp",
+            "instantiate_re2c_lexer.cpp",
+            "instantiate_re2c_lexer_str.cpp",
+            "token_ids.cpp",
+            "wave_config_constant.cpp",
         },
         .flags = cxxFlags,
     });
