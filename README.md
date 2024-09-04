@@ -14,7 +14,7 @@ Build libraries
 
 ```bash
 # Build no-header-only libraries
-$ zig build -Doptimize=<Debug|ReleaseSafe|ReleaseFast|ReleaseSmall> -Dtarget=<triple-target> --summary <all|new> -Dcontext -Djson -Dsystem -Dcontainer -Dcobalt -Dfilesystem -Dheaders-only=false
+$ zig build -Doptimize=<Debug|ReleaseSafe|ReleaseFast|ReleaseSmall> -Dtarget=<triple-target> --summary <all|new> -Dcontext -Djson -Dsystem -Dcontainer -Dcobalt -Dfilesystem
 ```
 
 #### Helper
@@ -30,7 +30,6 @@ Project-Specific Options:
                                    ReleaseSafe
                                    ReleaseFast
                                    ReleaseSmall
-  -Dheaders-only=[bool]        Use headers-only libraries (default: true)
   -Dcobalt=[bool]              Build cobalt library (default: false)
   -Dcontext=[bool]             Build context library (default: false)
   -Djson=[bool]                Build json library (default: false)
@@ -61,8 +60,6 @@ pub fn build(b: *std.Build) !void {
     const boost_dep = b.dependency("boost", .{
         .target = target,
         .optimize = optimize,
-        // default is true (recommended)
-        // .@"headers-only" = false,
     });
     const boost_artifact = boost_dep.artifact("boost");
 

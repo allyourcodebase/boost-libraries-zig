@@ -7,9 +7,7 @@ pub fn build(b: *std.Build) void {
     const boost_dep = b.dependency("boost", .{
         .target = target,
         .optimize = optimize,
-        // .@"headers-only" = false, // need link-library artifact
 
-        // need disable header-only
         .cobalt = true,
         .container = true,
         .context = false,
@@ -19,6 +17,7 @@ pub fn build(b: *std.Build) void {
     });
 
     inline for (&.{
+        "http_server.cc",
         "include_all.cc",
     }) |file| {
         buildTests(b, .{
@@ -71,9 +70,11 @@ fn buildTests(b: *std.Build, options: struct {
         exe.linkLibC();
     }
 
-    // for boost::asio/boost::beast
-    if (exe.rootModuleTarget().os.tag == .windows)
+    // for boost::asio/boost::beast/boost::cobalt
+    if (exe.rootModuleTarget().os.tag == .windows) {
         exe.linkSystemLibrary("ws2_32");
+        exe.linkSystemLibrary("mswsock");
+    }
 
     b.installArtifact(exe);
     const run_cmd = b.addRunArtifact(exe);

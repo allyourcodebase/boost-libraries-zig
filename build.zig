@@ -117,7 +117,6 @@ pub fn build(b: *std.Build) !void {
     const boost = boostLibraries(b, .{
         .target = target,
         .optimize = optimize,
-        .headers_only = b.option(bool, "headers-only", "Use headers-only libraries (default: true)") orelse true,
         .module = .{
             .cobalt = b.option(bool, "cobalt", "Build cobalt library (default: false)") orelse false,
             .context = b.option(bool, "context", "Build context library (default: false)") orelse false,
@@ -160,73 +159,34 @@ pub fn boostLibraries(b: *std.Build, config: Config) *std.Build.Step.Compile {
         lib.addIncludePath(boostLib);
     }
 
-    if (config.headers_only) {
-        // zig-pkg bypass (artifact need source file)
-        const empty = b.addWriteFile("empty.cc",
-            \\ #include <boost/config.hpp>
-        );
-        lib.step.dependOn(&empty.step);
-        lib.addCSourceFiles(.{
-            .root = empty.getDirectory(),
-            .files = &.{"empty.cc"},
-            .flags = cxxFlags,
-        });
-    } else {
-        if (config.module) |module| {
-            if (module.cobalt) {
-                const boostCobalt = buildCobalt(b, .{
-                    .headers_only = config.headers_only,
-                    .target = config.target,
-                    .optimize = config.optimize,
-                    .include_dirs = lib.root_module.include_dirs,
-                });
-                lib.addObject(boostCobalt);
-            }
-            if (module.container) {
-                const boostContainer = buildContainer(b, .{
-                    .headers_only = config.headers_only,
-                    .target = config.target,
-                    .optimize = config.optimize,
-                    .include_dirs = lib.root_module.include_dirs,
-                });
-                lib.addObject(boostContainer);
-            }
-            if (module.context) {
-                const boostContext = buildContext(b, .{
-                    .headers_only = config.headers_only,
-                    .target = config.target,
-                    .optimize = config.optimize,
-                    .include_dirs = lib.root_module.include_dirs,
-                });
-                lib.addObject(boostContext);
-            }
-            if (module.json) {
-                const boostJson = buildJson(b, .{
-                    .headers_only = config.headers_only,
-                    .target = config.target,
-                    .optimize = config.optimize,
-                    .include_dirs = lib.root_module.include_dirs,
-                });
-                lib.addObject(boostJson);
-            }
-            if (module.filesystem) {
-                const boostFileSystem = buildFileSystem(b, .{
-                    .headers_only = config.headers_only,
-                    .target = config.target,
-                    .optimize = config.optimize,
-                    .include_dirs = lib.root_module.include_dirs,
-                });
-                lib.addObject(boostFileSystem);
-            }
-            if (module.system) {
-                const boostSystem = buildSystem(b, .{
-                    .headers_only = config.headers_only,
-                    .target = config.target,
-                    .optimize = config.optimize,
-                    .include_dirs = lib.root_module.include_dirs,
-                });
-                lib.addObject(boostSystem);
-            }
+    // zig-pkg bypass (artifact need source file to generate object file)
+    const empty = b.addWriteFile("empty.cc",
+        \\ #include <boost/config.hpp>
+    );
+    lib.step.dependOn(&empty.step);
+    lib.addCSourceFiles(.{
+        .root = empty.getDirectory(),
+        .files = &.{"empty.cc"},
+        .flags = cxxFlags,
+    });
+    if (config.module) |module| {
+        if (module.cobalt) {
+            buildCobalt(b, lib);
+        }
+        if (module.container) {
+            buildContainer(b, lib);
+        }
+        if (module.context) {
+            buildContext(b, lib);
+        }
+        if (module.json) {
+            buildJson(b, lib);
+        }
+        if (module.filesystem) {
+            buildFileSystem(b, lib);
+        }
+        if (module.system) {
+            buildSystem(b, lib);
         }
     }
     if (lib.rootModuleTarget().abi == .msvc)
@@ -239,11 +199,9 @@ pub fn boostLibraries(b: *std.Build, config: Config) *std.Build.Step.Compile {
 }
 
 pub const Config = struct {
-    headers_only: bool = false,
     target: std.Build.ResolvedTarget,
     optimize: std.builtin.OptimizeMode,
     module: ?boostLibrariesModules = null,
-    include_dirs: ?std.ArrayListUnmanaged(std.Build.Module.IncludeDir) = null,
 };
 
 // No header-only libraries
@@ -257,21 +215,10 @@ const boostLibrariesModules = struct {
     system: bool = false,
 };
 
-fn buildCobalt(b: *std.Build, config: Config) *std.Build.Step.Compile {
+fn buildCobalt(b: *std.Build, obj: *std.Build.Step.Compile) void {
     const cobaltPath = b.dependency("cobalt", .{}).path("src");
-    const obj = b.addObject(.{
-        .name = "cobalt",
-        .target = config.target,
-        .optimize = config.optimize,
-    });
-
-    if (config.include_dirs) |include_dirs| {
-        for (include_dirs.items) |include| {
-            obj.root_module.include_dirs.append(b.allocator, include) catch unreachable;
-        }
-    }
     obj.defineCMacro("BOOST_COBALT_SOURCE", null);
-    obj.defineCMacro("BOOST_COBALT_USE_BOOST_CONTAINER_PMR", null);
+    // obj.defineCMacro("BOOST_COBALT_USE_BOOST_CONTAINER_PMR", null);
     obj.addCSourceFiles(.{
         .root = cobaltPath,
         .files = &.{
@@ -285,29 +232,10 @@ fn buildCobalt(b: *std.Build, config: Config) *std.Build.Step.Compile {
         },
         .flags = cxxFlags ++ &[_][]const u8{"-std=c++20"},
     });
-    if (obj.rootModuleTarget().abi == .msvc)
-        obj.linkLibC()
-    else {
-        obj.defineCMacro("_GNU_SOURCE", null);
-        obj.linkLibCpp();
-    }
-
-    return obj;
 }
 
-fn buildContainer(b: *std.Build, config: Config) *std.Build.Step.Compile {
+fn buildContainer(b: *std.Build, obj: *std.Build.Step.Compile) void {
     const containerPath = b.dependency("container", .{}).path("src");
-    const obj = b.addObject(.{
-        .name = "container",
-        .target = config.target,
-        .optimize = config.optimize,
-    });
-
-    if (config.include_dirs) |include_dirs| {
-        for (include_dirs.items) |include| {
-            obj.root_module.include_dirs.append(b.allocator, include) catch unreachable;
-        }
-    }
     obj.addCSourceFiles(.{
         .root = containerPath,
         .files = &.{
@@ -319,29 +247,11 @@ fn buildContainer(b: *std.Build, config: Config) *std.Build.Step.Compile {
         },
         .flags = cxxFlags,
     });
-    if (obj.rootModuleTarget().abi == .msvc)
-        obj.linkLibC()
-    else {
-        obj.defineCMacro("_GNU_SOURCE", null);
-        obj.linkLibCpp();
-    }
-
-    return obj;
 }
 
-fn buildJson(b: *std.Build, config: Config) *std.Build.Step.Compile {
+fn buildJson(b: *std.Build, obj: *std.Build.Step.Compile) void {
     const jsonPath = b.dependency("json", .{}).path("src");
-    const obj = b.addObject(.{
-        .name = "json",
-        .target = config.target,
-        .optimize = config.optimize,
-    });
 
-    if (config.include_dirs) |include_dirs| {
-        for (include_dirs.items) |include| {
-            obj.root_module.include_dirs.append(b.allocator, include) catch unreachable;
-        }
-    }
     obj.addCSourceFiles(.{
         .root = jsonPath,
         .files = &.{
@@ -349,29 +259,11 @@ fn buildJson(b: *std.Build, config: Config) *std.Build.Step.Compile {
         },
         .flags = cxxFlags,
     });
-    if (obj.rootModuleTarget().abi == .msvc)
-        obj.linkLibC()
-    else {
-        obj.defineCMacro("_GNU_SOURCE", null);
-        obj.linkLibCpp();
-    }
-
-    return obj;
 }
 
-fn buildSystem(b: *std.Build, config: Config) *std.Build.Step.Compile {
+fn buildSystem(b: *std.Build, obj: *std.Build.Step.Compile) void {
     const systemPath = b.dependency("system", .{}).path("src");
-    const obj = b.addObject(.{
-        .name = "system",
-        .target = config.target,
-        .optimize = config.optimize,
-    });
 
-    if (config.include_dirs) |include_dirs| {
-        for (include_dirs.items) |include| {
-            obj.root_module.include_dirs.append(b.allocator, include) catch unreachable;
-        }
-    }
     obj.addCSourceFiles(.{
         .root = systemPath,
         .files = &.{
@@ -379,29 +271,11 @@ fn buildSystem(b: *std.Build, config: Config) *std.Build.Step.Compile {
         },
         .flags = cxxFlags,
     });
-    if (obj.rootModuleTarget().abi == .msvc)
-        obj.linkLibC()
-    else {
-        obj.defineCMacro("_GNU_SOURCE", null);
-        obj.linkLibCpp();
-    }
-
-    return obj;
 }
 
-fn buildFileSystem(b: *std.Build, config: Config) *std.Build.Step.Compile {
+fn buildFileSystem(b: *std.Build, obj: *std.Build.Step.Compile) void {
     const fsPath = b.dependency("filesystem", .{}).path("src");
-    const obj = b.addObject(.{
-        .name = "filesystem",
-        .target = config.target,
-        .optimize = config.optimize,
-    });
 
-    if (config.include_dirs) |include_dirs| {
-        for (include_dirs.items) |include| {
-            obj.root_module.include_dirs.append(b.allocator, include) catch unreachable;
-        }
-    }
     if (obj.rootModuleTarget().os.tag == .windows) {
         obj.addCSourceFiles(.{
             .root = fsPath,
@@ -429,32 +303,15 @@ fn buildFileSystem(b: *std.Build, config: Config) *std.Build.Step.Compile {
         .flags = cxxFlags,
     });
     if (obj.rootModuleTarget().abi == .msvc) {
-        obj.linkLibC();
         obj.defineCMacro("_SCL_SECURE_NO_WARNINGS", null);
         obj.defineCMacro("_SCL_SECURE_NO_DEPRECATE", null);
         obj.defineCMacro("_CRT_SECURE_NO_WARNINGS", null);
         obj.defineCMacro("_CRT_SECURE_NO_DEPRECATE", null);
-    } else {
-        obj.defineCMacro("_GNU_SOURCE", null);
-        obj.linkLibCpp();
     }
-
-    return obj;
 }
 
-fn buildContext(b: *std.Build, config: Config) *std.Build.Step.Compile {
+fn buildContext(b: *std.Build, obj: *std.Build.Step.Compile) void {
     const contextPath = b.dependency("context", .{}).path("src");
-    const obj = b.addObject(.{
-        .name = "context",
-        .target = config.target,
-        .optimize = config.optimize,
-    });
-
-    if (config.include_dirs) |include_dirs| {
-        for (include_dirs.items) |include| {
-            obj.root_module.include_dirs.append(b.allocator, include) catch unreachable;
-        }
-    }
     const ctxPath = contextPath.getPath(b);
     obj.addIncludePath(.{
         .cwd_relative = b.pathJoin(&.{ ctxPath, "asm" }),
@@ -609,13 +466,4 @@ fn buildContext(b: *std.Build, config: Config) *std.Build.Step.Compile {
         },
         else => @panic("Invalid arch"),
     }
-
-    if (obj.rootModuleTarget().abi == .msvc)
-        obj.linkLibC()
-    else {
-        obj.defineCMacro("_GNU_SOURCE", null);
-        obj.linkLibCpp();
-    }
-
-    return obj;
 }
