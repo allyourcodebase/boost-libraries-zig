@@ -430,6 +430,30 @@
             .url = "git+https://github.com/boostorg/format#boost-1.86.0",
             .hash = "122036526563e97658be92e7a673111cc6583cd7b8cce438557013ab67dc43ff686c",
         },
+        .fiber = .{
+            .url = "git+https://github.com/boostorg/fiber#boost-1.86.0",
+            .hash = "12208461a29966f98620004e9323c4158c61e4b01dc68be8d8253938db4c3a73da8b",
+        },
+        .proto = .{
+            .url = "git+https://github.com/boostorg/proto#boost-1.86.0",
+            .hash = "122074ef322c59b95752e2454e4b290f441b28a057a57e3375eae664aaab4e2c200b",
+        },
+        .property_tree = .{
+            .url = "git+https://github.com/boostorg/property_tree#boost-1.86.0",
+            .hash = "12203209029b72893e1b85953008926c6eb75f4364608dac5c1bdc4a5d8a28bca71a",
+        },
+        .exception = .{
+            .url = "git+https://github.com/boostorg/exception#boost-1.86.0",
+            .hash = "1220dfddf3f17970ac68cc9846b4381256e54f0e2e5cff1cd301d5fbc3c1dec11df9",
+        },
+        .multi_index = .{
+            .url = "git+https://github.com/boostorg/multi_index#boost-1.86.0",
+            .hash = "122033f0d9fb26305dbccfa334d82c51d5746d89d556316566d4b7a748b3ed108f1a",
+        },
+        .random = .{
+            .url = "git+https://github.com/boostorg/random#boost-1.86.0",
+            .hash = "12207b79d0d1acba812181283a2bab056e863ae7bbebb2b6c003836536be8e00921c",
+        },
     },
     .paths = .{""},
 }

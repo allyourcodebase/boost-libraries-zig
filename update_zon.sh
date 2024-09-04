@@ -111,6 +111,12 @@ GIT_URLS=(
   "git+https://github.com/boostorg/coroutine2#$BOOST_VERSION"
   "git+https://github.com/boostorg/pool#$BOOST_VERSION"
   "git+https://github.com/boostorg/format#$BOOST_VERSION"
+  "git+https://github.com/boostorg/fiber#$BOOST_VERSION"
+  "git+https://github.com/boostorg/proto#$BOOST_VERSION"
+  "git+https://github.com/boostorg/property_tree#$BOOST_VERSION"
+  "git+https://github.com/boostorg/exception#$BOOST_VERSION"
+  "git+https://github.com/boostorg/multi_index#$BOOST_VERSION"
+  "git+https://github.com/boostorg/random#$BOOST_VERSION"
 
   ## Add more URLs here
 )

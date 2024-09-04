@@ -14,7 +14,15 @@ Build libraries
 
 ```bash
 # Build no-header-only libraries
-$ zig build -Doptimize=<Debug|ReleaseSafe|ReleaseFast|ReleaseSmall> -Dtarget=<triple-target> --summary <all|new> -Dcontext -Djson -Dsystem -Dcontainer -Dcobalt -Dfilesystem
+$ zig build -Doptimize=<Debug|ReleaseSafe|ReleaseFast|ReleaseSmall> \
+    -Dtarget=<triple-target> \
+    --summary <all|new> \
+    -Dcontext \
+    -Djson \
+    -Dsystem \
+    -Dcontainer \
+    -Dcobalt \
+    -Dfilesystem
 ```
 
 #### Helper
@@ -30,13 +38,20 @@ Project-Specific Options:
                                    ReleaseSafe
                                    ReleaseFast
                                    ReleaseSmall
-  -Dcobalt=[bool]              Build cobalt library (default: false)
-  -Dcontext=[bool]             Build context library (default: false)
-  -Djson=[bool]                Build json library (default: false)
-  -Dcontainer=[bool]           Build container library (default: false)
-  -Dfilesystem=[bool]          Build filesystem library (default: false)
-  -Dcoroutine2=[bool]          Build coroutine2 library (default: false)
-  -Dsystem=[bool]              Build system library (default: false)
+  -Dcharconv=[bool]            Build boost.charconv library (default: false)
+  -Dcobalt=[bool]              Build boost.cobalt library (default: false)
+  -Dcontainer=[bool]           Build boost.container library (default: false)
+  -Dcontext=[bool]             Build boost.context library (default: false)
+  -Dexception=[bool]           Build boost.exception library (default: false)
+  -Dfiber=[bool]               Build boost.fiber library (default: false)
+  -Dfilesystem=[bool]          Build boost.filesystem library (default: false)
+  -Diostreams=[bool]           Build boost.iostreams library (default: false)
+  -Djson=[bool]                Build boost.json library (default: false)
+  -Dlog=[bool]                 Build boost.log library (default: false)
+  -Dprocess=[bool]             Build boost.process library (default: false)
+  -Drandom=[bool]              Build boost.random library (default: false)
+  -Dserialization=[bool]       Build boost.serialization library (default: false)
+  -Dsystem=[bool]              Build boost.system library (default: false)
   -Dshared=[bool]              Build as shared library (default: false)
 ```
 

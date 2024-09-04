@@ -7,13 +7,7 @@ pub fn build(b: *std.Build) void {
     const boost_dep = b.dependency("boost", .{
         .target = target,
         .optimize = optimize,
-
         .cobalt = true,
-        .container = true,
-        .context = false,
-        .coroutine2 = false,
-        .filesystem = false,
-        .json = true,
     });
 
     inline for (&.{
