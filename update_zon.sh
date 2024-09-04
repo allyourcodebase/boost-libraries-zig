@@ -109,6 +109,8 @@ GIT_URLS=(
   "git+https://github.com/boostorg/heap#$BOOST_VERSION"
   "git+https://github.com/boostorg/msm#$BOOST_VERSION"
   "git+https://github.com/boostorg/coroutine2#$BOOST_VERSION"
+  "git+https://github.com/boostorg/pool#$BOOST_VERSION"
+  "git+https://github.com/boostorg/format#$BOOST_VERSION"
 
   ## Add more URLs here
 )

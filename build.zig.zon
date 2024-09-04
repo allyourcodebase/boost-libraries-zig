@@ -422,6 +422,14 @@
             .url = "git+https://github.com/boostorg/coroutine2#boost-1.86.0",
             .hash = "1220493d37eb17822028b1ec196eed9e5d92ef5549cc1a893cccc216406afdb06207",
         },
+        .pool = .{
+            .url = "git+https://github.com/boostorg/pool#boost-1.86.0",
+            .hash = "1220ef9959cc45f3e76c032b9f216f486d06ccee2c0b5e94bce450def54b6c3a845d",
+        },
+        .format = .{
+            .url = "git+https://github.com/boostorg/format#boost-1.86.0",
+            .hash = "122036526563e97658be92e7a673111cc6583cd7b8cce438557013ab67dc43ff686c",
+        },
     },
     .paths = .{""},
 }
