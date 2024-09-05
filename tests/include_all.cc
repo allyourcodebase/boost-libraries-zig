@@ -9,7 +9,6 @@
 #include <boost/config.hpp>
 #include <boost/crc.hpp>
 #include <boost/date_time.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/hana.hpp>
 #include <boost/multi_array.hpp>
 #include <boost/numeric/odeint.hpp>
@@ -18,7 +17,6 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/signals2.hpp>
 #include <boost/stacktrace.hpp>
-#include <boost/timer/timer.hpp>
 #include <boost/type_index.hpp>
 #include <boost/unordered/unordered_flat_map.hpp>
 #include <boost/unordered_map.hpp>

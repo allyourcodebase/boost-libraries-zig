@@ -31,3 +31,13 @@ jobs:
       - uses: mlugg/setup-zig@v1
       - name: Build Summary ${{ matrix.targets }}
         run: zig build --build-file $PWD/tests/build.zig --summary all -freference-trace -Dtarget=${{ matrix.targets }}
+
+  zig-msvc:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mlugg/setup-zig@v1
+      - name: Build Summary x86_64-windows-msvc
+        run: zig build --build-file $PWD/tests/build.zig --summary all -freference-trace -Dtarget=native-windows-msvc
