@@ -1,8 +1,14 @@
-# boost-libraries-zig
+# Boost Libraries using Zig build-system
 
 [Boost Libraries](https://boost.io) using `build.zig`.
 
 Replacing the [CMake](https://cmake.org/) and [B2](https://www.bfgroup.xyz/b2/) build system.
+
+
+> [!IMPORTANT]
+> For C++ projects, `zig c++` uses llvm-libunwind + llvm-libc++ (static-linking) by default.
+> Except, for MSVC target (`-nostdlib++`).
+
 
 ### Requirements
 
@@ -38,6 +44,7 @@ Project-Specific Options:
                                    ReleaseSafe
                                    ReleaseFast
                                    ReleaseSmall
+  -Datomic=[bool]              Build boost.atomic library (default: false)
   -Dcharconv=[bool]            Build boost.charconv library (default: false)
   -Dcobalt=[bool]              Build boost.cobalt library (default: false)
   -Dcontainer=[bool]           Build boost.container library (default: false)
@@ -50,8 +57,12 @@ Project-Specific Options:
   -Dlog=[bool]                 Build boost.log library (default: false)
   -Dprocess=[bool]             Build boost.process library (default: false)
   -Drandom=[bool]              Build boost.random library (default: false)
+  -Dregex=[bool]               Build boost.regex library (default: false)
   -Dserialization=[bool]       Build boost.serialization library (default: false)
+  -Dstacktrace=[bool]          Build boost.stacktrace library (default: false)
   -Dsystem=[bool]              Build boost.system library (default: false)
+  -Durl=[bool]                 Build boost.url library (default: false)
+  -Dwave=[bool]                Build boost.wave library (default: false)
   -Dshared=[bool]              Build as shared library (default: false)
 ```
 
@@ -81,6 +92,8 @@ pub fn build(b: *std.Build) !void {
     for(boost_artifact.root_module.include_dirs.items) |include_dir| {
         try exe.root_module.include_dirs.append(b.allocator, include_dir);
     }
+    // if not header-only, link library
+    exe.linkLibrary(boost_artifact);
 }
 ```
 
