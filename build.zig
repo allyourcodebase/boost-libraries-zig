@@ -100,9 +100,13 @@ const boost_libs = [_][]const u8{
     "local_function",
     "format",
     "pool",
+    "gil",
+    "python",
     "proto",
     "property_tree",
     "exception",
+    "property_map",
+    "property_map_parallel",
     "multi_index",
     "callable_traits",
     "compat",
@@ -135,7 +139,9 @@ pub fn build(b: *std.Build) void {
             .iostreams = b.option(bool, "iostreams", "Build boost.iostreams library (default: false)") orelse false,
             .json = b.option(bool, "json", "Build boost.json library (default: false)") orelse false,
             .log = b.option(bool, "log", "Build boost.log library (default: false)") orelse false,
+            .nowide = b.option(bool, "nowide", "Build boost.nowide library (default: false)") orelse false,
             .process = b.option(bool, "process", "Build boost.process library (default: false)") orelse false,
+            .python = b.option(bool, "python", "Build boost.python library (default: false)") orelse false,
             .random = b.option(bool, "random", "Build boost.random library (default: false)") orelse false,
             .regex = b.option(bool, "regex", "Build boost.regex library (default: false)") orelse false,
             .serialization = b.option(bool, "serialization", "Build boost.serialization library (default: false)") orelse false,
@@ -230,8 +236,14 @@ pub fn boostLibraries(b: *std.Build, config: Config) *std.Build.Step.Compile {
         if (module.serialization) {
             buildSerialization(b, lib);
         }
+        if (module.nowide) {
+            buildNoWide(b, lib);
+        }
         if (module.system) {
             buildSystem(b, lib);
+        }
+        if (module.python) {
+            buildPython(b, lib);
         }
         if (module.stacktrace) {
             buildStacktrace(b, lib);
@@ -274,7 +286,9 @@ const boostLibrariesModules = struct {
     iostreams: bool = false,
     json: bool = false,
     log: bool = false,
+    nowide: bool = false,
     process: bool = false,
+    python: bool = false,
     random: bool = false,
     regex: bool = false,
     stacktrace: bool = false,
@@ -951,6 +965,77 @@ fn buildLog(b: *std.Build, obj: *std.Build.Step.Compile) void {
         },
         .flags = cxxFlags,
     });
+}
+
+fn buildNoWide(b: *std.Build, obj: *std.Build.Step.Compile) void {
+    const nwPath = b.dependency("nowide", .{}).path("src");
+
+    obj.addIncludePath(nwPath);
+    obj.addCSourceFiles(.{
+        .root = nwPath,
+        .files = &.{
+            "console_buffer.cpp",
+            "cstdio.cpp",
+            "cstdlib.cpp",
+            "filebuf.cpp",
+            "iostream.cpp",
+            "stat.cpp",
+        },
+        .flags = cxxFlags,
+    });
+}
+
+fn buildPython(b: *std.Build, obj: *std.Build.Step.Compile) void {
+    const pyPath = b.dependency("python", .{}).path("src");
+
+    obj.linkSystemLibrary("python3");
+    obj.addCSourceFiles(.{
+        .root = pyPath,
+        .files = &.{
+            "converter/arg_to_python_base.cpp",
+            "converter/builtin_converters.cpp",
+            "converter/from_python.cpp",
+            "converter/registry.cpp",
+            "converter/type_id.cpp",
+            "dict.cpp",
+            "errors.cpp",
+            "exec.cpp",
+            "import.cpp",
+            "list.cpp",
+            "long.cpp",
+            "module.cpp",
+            "object/class.cpp",
+            "object/enum.cpp",
+            "object/function.cpp",
+            "object/function_doc_signature.cpp",
+            "object/inheritance.cpp",
+            "object/iterator.cpp",
+            "object/life_support.cpp",
+            "object/pickle_support.cpp",
+            "object/stl_iterator.cpp",
+            "object_operators.cpp",
+            "object_protocol.cpp",
+            "slice.cpp",
+            "str.cpp",
+            "tuple.cpp",
+            "wrapper.cpp",
+        },
+        .flags = cxxFlags,
+    });
+
+    // obj.linkSystemLibrary("npymath");
+    // obj.addCSourceFiles(.{
+    //     .root = pyPath,
+    //     .files = &.{
+    //         "numpy/dtype.cpp",
+    //         "numpy/matrix.cpp",
+    //         "numpy/ndarray.cpp",
+    //         "numpy/numpy.cpp",
+    //         "numpy/scalars.cpp",
+    //         "numpy/ufunc.cpp",
+    //     },
+    //     .flags = cxxFlags,
+    // });
 }
 
 fn buildWave(b: *std.Build, obj: *std.Build.Step.Compile) void {

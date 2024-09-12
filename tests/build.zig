@@ -42,7 +42,8 @@ fn buildTests(b: *std.Build, options: struct {
             exe.root_module.include_dirs.append(b.allocator, include_dir) catch unreachable;
         }
         // if not header-only, link library
-        exe.linkLibrary(artifact);
+        if (std.mem.endsWith(u8, exe.name, "server"))
+            exe.linkLibrary(artifact);
     }
 
     for (options.files) |file| {
@@ -65,9 +66,11 @@ fn buildTests(b: *std.Build, options: struct {
     }
 
     // for boost::asio/boost::beast/boost::cobalt
-    if (exe.rootModuleTarget().os.tag == .windows) {
-        exe.linkSystemLibrary("ws2_32");
-        exe.linkSystemLibrary("mswsock");
+    if (std.mem.endsWith(u8, exe.name, "server")) {
+        if (exe.rootModuleTarget().os.tag == .windows) {
+            exe.linkSystemLibrary("ws2_32");
+            exe.linkSystemLibrary("mswsock");
+        }
     }
 
     b.installArtifact(exe);

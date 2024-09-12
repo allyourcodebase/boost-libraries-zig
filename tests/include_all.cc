@@ -3,7 +3,6 @@
 #include <boost/algorithm/algorithm.hpp>
 #include <boost/any.hpp>
 #include <boost/array.hpp>
-#include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/callable_traits.hpp>
 #include <boost/config.hpp>
@@ -46,8 +45,6 @@ void testStackTrace();
 int main() {
   std::cout << "Boost version " << BOOST_VERSION / 100000 << "."
             << BOOST_VERSION / 100 % 1000 << "." << BOOST_VERSION % 100 << "\n";
-
-  asio::io_context io_service;
 
   testCRC();
   testSafeIntegers();

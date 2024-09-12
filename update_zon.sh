@@ -119,6 +119,10 @@ GIT_URLS=(
   "git+https://github.com/boostorg/random#$BOOST_VERSION"
   "git+https://github.com/boostorg/dll#$BOOST_VERSION"
   "git+https://github.com/boostorg/multiprecision#$BOOST_VERSION"
+  "git+https://github.com/boostorg/gil#$BOOST_VERSION"
+  "git+https://github.com/boostorg/python#$BOOST_VERSION"
+  "git+https://github.com/boostorg/property_map#$BOOST_VERSION"
+  "git+https://github.com/boostorg/property_map_parallel#$BOOST_VERSION"
 
   ## Add more URLs here
 )

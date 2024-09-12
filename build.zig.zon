@@ -462,6 +462,22 @@
             .url = "git+https://github.com/boostorg/multiprecision#boost-1.86.0",
             .hash = "12200ebfce9b83b9617018a985bbcec75999ea628f438bd7ad9912af5ba795e5411a",
         },
+        .gil = .{
+            .url = "git+https://github.com/boostorg/gil#boost-1.86.0",
+            .hash = "122041474a0277c624c8cf7608d44746cb08c027a0af6687fca27463a2373c62999d",
+        },
+        .python = .{
+            .url = "git+https://github.com/boostorg/python#boost-1.86.0",
+            .hash = "122065876f46e3dfb99e6177bce74a36932dd6e2bec9d645611b94039544cc58998f",
+        },
+        .property_map = .{
+            .url = "git+https://github.com/boostorg/property_map#boost-1.86.0",
+            .hash = "1220a0c9bc02ed543a0a19abec48a327ed926e5009fdf83b77e1d86acd021eef57fc",
+        },
+        .property_map_parallel = .{
+            .url = "git+https://github.com/boostorg/property_map_parallel#boost-1.86.0",
+            .hash = "122001fc1ec7bbcbf86fa2cbcbf6f5ee3f2de247057d9ce7c2fe7527b3070345c7ec",
+        },
     },
     .paths = .{""},
 }
