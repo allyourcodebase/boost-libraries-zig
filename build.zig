@@ -770,16 +770,16 @@ fn buildStacktrace(b: *std.Build, obj: *std.Build.Step.Compile) void {
         .flags = cxxFlags,
     });
     // TODO: fix https://github.com/ziglang/zig/issues/21308
-    // if (obj.dependsOnSystemLibrary("backtrace")) {
-    //     obj.addCSourceFiles(.{
-    //         .root = stackPath,
-    //         .files = &.{
-    //             "backtrace.cpp",
-    //         },
-    //         .flags = cxxFlags,
-    //     });
-    //     obj.linkSystemLibrary("backtrace");
-    // }
+    if (checkSystemLibrary(obj, "backtrace")) {
+        obj.addCSourceFiles(.{
+            .root = stackPath,
+            .files = &.{
+                "backtrace.cpp",
+            },
+            .flags = cxxFlags,
+        });
+        obj.linkSystemLibrary("backtrace");
+    }
 
     if (obj.rootModuleTarget().abi == .msvc) {
         obj.addCSourceFiles(.{
@@ -1023,19 +1023,21 @@ fn buildPython(b: *std.Build, obj: *std.Build.Step.Compile) void {
         .flags = cxxFlags,
     });
 
-    // obj.linkSystemLibrary("npymath");
-    // obj.addCSourceFiles(.{
-    //     .root = pyPath,
-    //     .files = &.{
-    //         "numpy/dtype.cpp",
-    //         "numpy/matrix.cpp",
-    //         "numpy/ndarray.cpp",
-    //         "numpy/numpy.cpp",
-    //         "numpy/scalars.cpp",
-    //         "numpy/ufunc.cpp",
-    //     },
-    //     .flags = cxxFlags,
-    // });
+    if (checkSystemLibrary(obj, "npymath")) {
+        obj.linkSystemLibrary("npymath");
+        obj.addCSourceFiles(.{
+            .root = pyPath,
+            .files = &.{
+                "numpy/dtype.cpp",
+                "numpy/matrix.cpp",
+                "numpy/ndarray.cpp",
+                "numpy/numpy.cpp",
+                "numpy/scalars.cpp",
+                "numpy/ufunc.cpp",
+            },
+            .flags = cxxFlags,
+        });
+    }
 }
 
 fn buildWave(b: *std.Build, obj: *std.Build.Step.Compile) void {
@@ -1059,4 +1061,34 @@ fn buildWave(b: *std.Build, obj: *std.Build.Step.Compile) void {
         },
         .flags = cxxFlags,
     });
+}
+
+// temporary workaround for https://github.com/ziglang/zig/issues/21308
+fn checkSystemLibrary(compile: *std.Build.Step.Compile, name: []const u8) bool {
+    var is_linking_libc = false;
+    var is_linking_libcpp = false;
+
+    var dep_it = compile.root_module.iterateDependencies(compile, true);
+    while (dep_it.next()) |dep| {
+        for (dep.module.link_objects.items) |link_object| {
+            switch (link_object) {
+                .system_lib => |lib| if (std.mem.eql(u8, lib.name, name)) return true,
+                else => continue,
+            }
+        }
+        if (dep.module.link_libc) |link_libc|
+            is_linking_libc = is_linking_libc or link_libc;
+        if (dep.module.link_libcpp) |link_libcpp|
+            is_linking_libcpp = is_linking_libcpp or (link_libcpp == true);
+    }
+
+    if (compile.rootModuleTarget().is_libc_lib_name(name)) {
+        return is_linking_libc;
+    }
+
+    if (compile.rootModuleTarget().is_libcpp_lib_name(name)) {
+        return is_linking_libcpp;
+    }
+
+    return false;
 }
