@@ -98,6 +98,7 @@ const boost_libs = [_][]const u8{
     "crc",
     "hof",
     "interval",
+    "icl",
     "local_function",
     "format",
     "pool",

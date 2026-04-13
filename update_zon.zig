@@ -147,6 +147,7 @@ const git_urls = [_][]const u8{
     "git+https://github.com/boostorg/function_types#" ++ boost_version,
     "git+https://github.com/boostorg/hof#" ++ boost_version,
     "git+https://github.com/boostorg/interval#" ++ boost_version,
+    "git+https://github.com/boostorg/icl#" ++ boost_version,
     "git+https://github.com/boostorg/local_function#" ++ boost_version,
     "git+https://github.com/boostorg/log#" ++ boost_version,
     "git+https://github.com/boostorg/charconv#" ++ boost_version,

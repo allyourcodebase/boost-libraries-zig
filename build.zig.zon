@@ -396,6 +396,10 @@
             .url = "git+https://github.com/boostorg/interval#boost-1.90.0",
             .hash = "N-V-__8AAI5fBgALNeyXb0DEVCArdX3aMz4rwz4bZhiQ8Pn4",
         },
+        .icl = .{
+            .url = "git+https://github.com/boostorg/icl#boost-1.90.0",
+            .hash = "N-V-__8AACHFgAAL6MnwPXMGH4XFiUWfVG2ZZsaSiCUlKW3P",
+        },
         .local_function = .{
             .url = "git+https://github.com/boostorg/local_function#boost-1.90.0",
             .hash = "N-V-__8AAHGaFQDt5k8TphnVwa6vACn9SjMFY-sjx1bHeyhn",
