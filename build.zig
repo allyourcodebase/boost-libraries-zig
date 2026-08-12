@@ -185,8 +185,23 @@ pub fn boostLibraries(b: *std.Build, config: Config) *std.Build.Step.Compile {
     });
 
     inline for (boost_libs) |name| {
-        const boostLib = b.dependency(name, .{}).path("include");
-        lib.root_module.addIncludePath(boostLib);
+        if (config.module) |module| {
+            if (@hasField(boostLibrariesModules, name)) {
+                if (@field(module, name)) {
+                    if (b.lazyDependency(name, .{})) |boostlib| {
+                        lib.root_module.addIncludePath(boostlib.path("include"));
+                    }
+                }
+            } else {
+                if (b.lazyDependency(name, .{})) |boostlib| {
+                    lib.root_module.addIncludePath(boostlib.path("include"));
+                }
+            }
+        } else {
+            if (b.lazyDependency(name, .{})) |boostlib| {
+                lib.root_module.addIncludePath(boostlib.path("include"));
+            }
+        }
     }
 
     // zig-pkg bypass (artifact need generate object file)
@@ -306,7 +321,7 @@ const boostLibrariesModules = struct {
 };
 
 fn buildCobalt(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const cobaltPath = b.dependency("cobalt", .{}).path("src");
+    const cobaltPath = (b.lazyDependency("cobalt", .{}) orelse return).path("src");
     obj.root_module.addCMacro("BOOST_COBALT_SOURCE", "");
     obj.root_module.addCSourceFiles(.{
         .root = cobaltPath,
@@ -324,7 +339,7 @@ fn buildCobalt(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildContainer(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const containerPath = b.dependency("container", .{}).path("src");
+    const containerPath = (b.lazyDependency("container", .{}) orelse return).path("src");
     obj.root_module.addCSourceFiles(.{
         .root = containerPath,
         .files = &.{
@@ -339,7 +354,7 @@ fn buildContainer(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildFiber(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const fiberPath = b.dependency("fiber", .{}).path("src");
+    const fiberPath = (b.lazyDependency("fiber", .{}) orelse return).path("src");
     obj.root_module.addCSourceFiles(.{
         .root = fiberPath,
         .files = &.{
@@ -366,7 +381,7 @@ fn buildFiber(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildJson(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const jsonPath = b.dependency("json", .{}).path("src");
+    const jsonPath = (b.lazyDependency("json", .{}) orelse return).path("src");
 
     obj.root_module.addCSourceFiles(.{
         .root = jsonPath,
@@ -378,7 +393,7 @@ fn buildJson(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildProcess(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const processPath = b.dependency("process", .{}).path("src");
+    const processPath = (b.lazyDependency("process", .{}) orelse return).path("src");
 
     obj.root_module.addCSourceFiles(.{
         .root = processPath,
@@ -408,7 +423,7 @@ fn buildProcess(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildSystem(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const systemPath = b.dependency("system", .{}).path("src");
+    const systemPath = (b.lazyDependency("system", .{}) orelse return).path("src");
 
     obj.root_module.addCSourceFiles(.{
         .root = systemPath,
@@ -420,7 +435,7 @@ fn buildSystem(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildAtomic(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const atomicPath = b.dependency("atomic", .{}).path("src");
+    const atomicPath = (b.lazyDependency("atomic", .{}) orelse return).path("src");
 
     obj.root_module.addIncludePath(atomicPath);
     obj.root_module.addCSourceFiles(.{
@@ -459,7 +474,7 @@ fn buildAtomic(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildRegex(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const regPath = b.dependency("regex", .{}).path("src");
+    const regPath = (b.lazyDependency("regex", .{}) orelse return).path("src");
 
     obj.root_module.addCSourceFiles(.{
         .root = regPath,
@@ -472,7 +487,7 @@ fn buildRegex(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildFileSystem(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const fsPath = b.dependency("filesystem", .{}).path("src");
+    const fsPath = (b.lazyDependency("filesystem", .{}) orelse return).path("src");
 
     if (obj.rootModuleTarget().os.tag == .windows) {
         obj.root_module.addCSourceFiles(.{
@@ -509,7 +524,7 @@ fn buildFileSystem(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildContext(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const contextPath = b.dependency("context", .{}).path("src");
+    const contextPath = (b.lazyDependency("context", .{}) orelse return).path("src");
     const ctxPath = contextPath.getPath(b);
     obj.root_module.addIncludePath(.{
         .cwd_relative = b.pathJoin(&.{ ctxPath, "asm" }),
@@ -667,7 +682,7 @@ fn buildContext(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildSerialization(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const serialPath = b.dependency("serialization", .{}).path("src");
+    const serialPath = (b.lazyDependency("serialization", .{}) orelse return).path("src");
 
     obj.root_module.addCSourceFiles(.{
         .root = serialPath,
@@ -726,7 +741,7 @@ fn buildSerialization(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildCharConv(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const cconvPath = b.dependency("charconv", .{}).path("src");
+    const cconvPath = (b.lazyDependency("charconv", .{}) orelse return).path("src");
 
     obj.root_module.addCSourceFiles(.{
         .root = cconvPath,
@@ -739,7 +754,7 @@ fn buildCharConv(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildRandom(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const rndPath = b.dependency("random", .{}).path("src");
+    const rndPath = (b.lazyDependency("random", .{}) orelse return).path("src");
 
     obj.root_module.addCSourceFiles(.{
         .root = rndPath,
@@ -751,7 +766,7 @@ fn buildRandom(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildException(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const exceptPath = b.dependency("exception", .{}).path("src");
+    const exceptPath = (b.lazyDependency("exception", .{}) orelse return).path("src");
 
     obj.root_module.addCSourceFiles(.{
         .root = exceptPath,
@@ -763,7 +778,7 @@ fn buildException(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildStacktrace(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const stackPath = b.dependency("stacktrace", .{}).path("src");
+    const stackPath = (b.lazyDependency("stacktrace", .{}) orelse return).path("src");
 
     obj.root_module.addIncludePath(stackPath);
     obj.root_module.addCSourceFiles(.{
@@ -804,7 +819,7 @@ fn buildStacktrace(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildURL(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const urlPath = b.dependency("url", .{}).path("src");
+    const urlPath = (b.lazyDependency("url", .{}) orelse return).path("src");
 
     obj.root_module.addCSourceFiles(.{
         .root = urlPath,
@@ -882,7 +897,7 @@ fn buildURL(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildIOStreams(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const iostreamPath = b.dependency("iostreams", .{}).path("src");
+    const iostreamPath = (b.lazyDependency("iostreams", .{}) orelse return).path("src");
 
     obj.root_module.addCSourceFiles(.{
         .root = iostreamPath,
@@ -900,82 +915,84 @@ fn buildIOStreams(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildLog(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const logPath = b.dependency("log", .{}).path("src");
-    obj.root_module.addCMacro("BOOST_LOG_NO_THREADS", "");
-    obj.root_module.addIncludePath(logPath);
-    obj.root_module.addCSourceFiles(.{
-        .root = logPath,
-        .files = &.{
-            "attribute_name.cpp",
-            "attribute_set.cpp",
-            "attribute_value_set.cpp",
-            "code_conversion.cpp",
-            "core.cpp",
-            "date_time_format_parser.cpp",
-            "default_attribute_names.cpp",
-            "default_sink.cpp",
-            "dump.cpp",
-            "dump_avx2.cpp",
-            "dump_ssse3.cpp",
-            "event.cpp",
-            "exceptions.cpp",
-            "format_parser.cpp",
-            "global_logger_storage.cpp",
-            "named_scope.cpp",
-            "named_scope_format_parser.cpp",
-            "once_block.cpp",
-            "permissions.cpp",
-            "process_id.cpp",
-            "process_name.cpp",
-            "record_ostream.cpp",
-            "setup/default_filter_factory.cpp",
-            "setup/default_formatter_factory.cpp",
-            "setup/filter_parser.cpp",
-            "setup/formatter_parser.cpp",
-            "setup/init_from_settings.cpp",
-            "setup/init_from_stream.cpp",
-            "setup/matches_relation_factory.cpp",
-            "setup/parser_utils.cpp",
-            "setup/settings_parser.cpp",
-            "severity_level.cpp",
-            "spirit_encoding.cpp",
-            "syslog_backend.cpp",
-            "text_file_backend.cpp",
-            "text_multifile_backend.cpp",
-            "text_ostream_backend.cpp",
-            "thread_id.cpp",
-            "thread_specific.cpp",
-            "threadsafe_queue.cpp",
-            "timer.cpp",
-            "timestamp.cpp",
-            "trivial.cpp",
-        },
-        .flags = cxxFlags,
-    });
-    obj.root_module.addCSourceFiles(.{
-        .root = logPath,
-        .files = switch (obj.rootModuleTarget().os.tag) {
-            .windows => &.{
-                "windows/debug_output_backend.cpp",
-                "windows/event_log_backend.cpp",
-                "windows/ipc_reliable_message_queue.cpp",
-                "windows/ipc_sync_wrappers.cpp",
-                "windows/is_debugger_present.cpp",
-                "windows/light_rw_mutex.cpp",
-                "windows/mapped_shared_memory.cpp",
-                "windows/object_name.cpp",
+    if (b.lazyDependency("log", .{})) |dep| {
+        const logPath = dep.path("src");
+        obj.root_module.addCMacro("BOOST_LOG_NO_THREADS", "");
+        obj.root_module.addIncludePath(logPath);
+        obj.root_module.addCSourceFiles(.{
+            .root = logPath,
+            .files = &.{
+                "attribute_name.cpp",
+                "attribute_set.cpp",
+                "attribute_value_set.cpp",
+                "code_conversion.cpp",
+                "core.cpp",
+                "date_time_format_parser.cpp",
+                "default_attribute_names.cpp",
+                "default_sink.cpp",
+                "dump.cpp",
+                "dump_avx2.cpp",
+                "dump_ssse3.cpp",
+                "event.cpp",
+                "exceptions.cpp",
+                "format_parser.cpp",
+                "global_logger_storage.cpp",
+                "named_scope.cpp",
+                "named_scope_format_parser.cpp",
+                "once_block.cpp",
+                "permissions.cpp",
+                "process_id.cpp",
+                "process_name.cpp",
+                "record_ostream.cpp",
+                "setup/default_filter_factory.cpp",
+                "setup/default_formatter_factory.cpp",
+                "setup/filter_parser.cpp",
+                "setup/formatter_parser.cpp",
+                "setup/init_from_settings.cpp",
+                "setup/init_from_stream.cpp",
+                "setup/matches_relation_factory.cpp",
+                "setup/parser_utils.cpp",
+                "setup/settings_parser.cpp",
+                "severity_level.cpp",
+                "spirit_encoding.cpp",
+                "syslog_backend.cpp",
+                "text_file_backend.cpp",
+                "text_multifile_backend.cpp",
+                "text_ostream_backend.cpp",
+                "thread_id.cpp",
+                "thread_specific.cpp",
+                "threadsafe_queue.cpp",
+                "timer.cpp",
+                "timestamp.cpp",
+                "trivial.cpp",
             },
-            else => &.{
-                "posix/ipc_reliable_message_queue.cpp",
-                "posix/object_name.cpp",
+            .flags = cxxFlags,
+        });
+        obj.root_module.addCSourceFiles(.{
+            .root = logPath,
+            .files = switch (obj.rootModuleTarget().os.tag) {
+                .windows => &.{
+                    "windows/debug_output_backend.cpp",
+                    "windows/event_log_backend.cpp",
+                    "windows/ipc_reliable_message_queue.cpp",
+                    "windows/ipc_sync_wrappers.cpp",
+                    "windows/is_debugger_present.cpp",
+                    "windows/light_rw_mutex.cpp",
+                    "windows/mapped_shared_memory.cpp",
+                    "windows/object_name.cpp",
+                },
+                else => &.{
+                    "posix/ipc_reliable_message_queue.cpp",
+                    "posix/object_name.cpp",
+                },
             },
-        },
-        .flags = cxxFlags,
-    });
+            .flags = cxxFlags,
+        });
+    }
 }
 
 fn buildNoWide(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const nwPath = b.dependency("nowide", .{}).path("src");
+    const nwPath = (b.lazyDependency("nowide", .{}) orelse return).path("src");
 
     obj.root_module.addIncludePath(nwPath);
     obj.root_module.addCSourceFiles(.{
@@ -993,7 +1010,7 @@ fn buildNoWide(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildPython(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const pyPath = b.dependency("python", .{}).path("src");
+    const pyPath = (b.lazyDependency("python", .{}) orelse return).path("src");
 
     obj.root_module.linkSystemLibrary("python3", .{});
     obj.root_module.addCSourceFiles(.{
@@ -1048,7 +1065,7 @@ fn buildPython(b: *std.Build, obj: *std.Build.Step.Compile) void {
 }
 
 fn buildWave(b: *std.Build, obj: *std.Build.Step.Compile) void {
-    const wavePath = b.dependency("wave", .{}).path("src");
+    const wavePath = (b.lazyDependency("wave", .{}) orelse return).path("src");
 
     obj.root_module.addCSourceFiles(.{
         .root = wavePath,

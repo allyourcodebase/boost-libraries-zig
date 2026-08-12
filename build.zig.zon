@@ -7,506 +7,632 @@
         .core = .{
             .url = "git+https://github.com/boostorg/core#boost-1.91.0",
             .hash = "N-V-__8AAMAJEQBpCwsEF4Fymh0LB7Ee3SA2WSXbXRUvL5CY",
+            .lazy = true,
         },
         .algorithm = .{
             .url = "git+https://github.com/boostorg/algorithm#boost-1.91.0",
             .hash = "N-V-__8AAGopPQCpscUpYP8LGUGbwU23Ukm1tyT8jQruS9Mx",
+            .lazy = true,
         },
         .assert = .{
             .url = "git+https://github.com/boostorg/assert#boost-1.91.0",
             .hash = "N-V-__8AAFXjAQAiGHsyXEVGYckVwfWoTxx_NRDL35y31FRb",
+            .lazy = true,
         },
         .config = .{
             .url = "git+https://github.com/boostorg/config#boost-1.91.0",
             .hash = "N-V-__8AAA3sKADgvzhPSaS7kbKQp5ZIkIHdtIgESTdEHsSf",
+            .lazy = true,
         },
         .mp11 = .{
             .url = "git+https://github.com/boostorg/mp11#boost-1.91.0",
             .hash = "N-V-__8AAEgVDwC46X8rV6n2CBwJPL59kOCsEgPk2HBUi4QA",
+            .lazy = true,
         },
         .type_traits = .{
             .url = "git+https://github.com/boostorg/type_traits#boost-1.91.0",
             .hash = "N-V-__8AADlrWAAFFrHd-aoNn_Kb4pMwq6YUqIB8TuyFNxkC",
+            .lazy = true,
         },
         .range = .{
             .url = "git+https://github.com/boostorg/range#boost-1.91.0",
             .hash = "N-V-__8AAItvGQDidCeie9W01vPsPIOz9U8OvHPKcq9ZhDvS",
+            .lazy = true,
         },
         .functional = .{
             .url = "git+https://github.com/boostorg/functional#boost-1.91.0",
             .hash = "N-V-__8AAHz5BAAHbQ1m2VR4nU0pzxbDjelQBNnSmWDxZvAp",
+            .lazy = true,
         },
         .container_hash = .{
             .url = "git+https://github.com/boostorg/container_hash#boost-1.91.0",
             .hash = "N-V-__8AAFaFBQAHOgaFfHMh163b-zs_1IuON9tJdCyOsAdx",
+            .lazy = true,
         },
         .mpl = .{
             .url = "git+https://github.com/boostorg/mpl#boost-1.91.0",
             .hash = "N-V-__8AAD4IiQBnpHg_Gknu7MjX8Kz-VUv8UHY-cO9uw5iE",
+            .lazy = true,
         },
         .iterator = .{
             .url = "git+https://github.com/boostorg/iterator#boost-1.91.0",
             .hash = "N-V-__8AALnQLADpFVUCcYuWSGxTsgtpRTzGcIMeWX3ORMi9",
+            .lazy = true,
         },
         .preprocessor = .{
             .url = "git+https://github.com/boostorg/preprocessor#boost-1.91.0",
             .hash = "N-V-__8AALI0tQDZW9UfY8zpFBacRQKLZ19tOAZCL4OAlZtG",
+            .lazy = true,
         },
         .describe = .{
             .url = "git+https://github.com/boostorg/describe#boost-1.91.0",
             .hash = "N-V-__8AAJYmBAAE46DDs-I0Fg_tD8wrmkoQifcLpyWfx3EP",
+            .lazy = true,
         },
         .move = .{
             .url = "git+https://github.com/boostorg/move#boost-1.91.0",
             .hash = "N-V-__8AAMa2DAC3uEbA7x25Fm1PDL0qtqD4gDnQ7RQq0CfW",
+            .lazy = true,
         },
         .detail = .{
             .url = "git+https://github.com/boostorg/detail#boost-1.91.0",
             .hash = "N-V-__8AAM-PAwASe805H80Udie-igI_OM9Jserr7bTutPvt",
+            .lazy = true,
         },
         .static_assert = .{
             .url = "git+https://github.com/boostorg/static_assert#boost-1.91.0",
             .hash = "N-V-__8AAMnWAAC6fA_N6gaIzFNSlNOSNChTXS1erEqenqLY",
+            .lazy = true,
         },
         .throw_exception = .{
             .url = "git+https://github.com/boostorg/throw_exception#boost-1.91.0",
             .hash = "N-V-__8AAGLeAQC9BvhjBrOJBD95LjyKDTtXj5iWQxmXwu8h",
+            .lazy = true,
         },
         .concept_check = .{
             .url = "git+https://github.com/boostorg/concept_check#boost-1.91.0",
             .hash = "N-V-__8AAHEvBACzjLPYKbOhY6uIeln7DXdVb4TLDuE4AH3l",
+            .lazy = true,
         },
         .asio = .{
             .url = "git+https://github.com/boostorg/asio#boost-1.91.0",
             .hash = "N-V-__8AALvO8QAvXuYuLBxp-Wt2ROMKc3VtmDDoAiElZwZV",
+            .lazy = true,
         },
         .tuple = .{
             .url = "git+https://github.com/boostorg/tuple#boost-1.91.0",
             .hash = "N-V-__8AAGcqAgCSPfBswdhNh93yRbvoUfHQtISI0bYeL-Ta",
+            .lazy = true,
         },
         .predef = .{
             .url = "git+https://github.com/boostorg/predef#boost-1.91.0",
             .hash = "N-V-__8AAM3hCgB8Arslq5pHATUljnwANJKh9EMM95ERNJmK",
+            .lazy = true,
         },
         .utility = .{
             .url = "git+https://github.com/boostorg/utility#boost-1.91.0",
             .hash = "N-V-__8AAJvxDADpN7tJZKn0AnRsu6KChnWD-0Gh0W0oCFJq",
+            .lazy = true,
         },
         .bind = .{
             .url = "git+https://github.com/boostorg/bind#boost-1.91.0",
             .hash = "N-V-__8AAJmpCgADPROWGHRFPoD4wQRo2Zr7NmgSMcQxps7B",
+            .lazy = true,
         },
         .container = .{
             .url = "git+https://github.com/boostorg/container#boost-1.91.0",
             .hash = "N-V-__8AAKECUQCehZSdeYy_bmM5NeYxJxbf907bdWEs_cdO",
+            .lazy = true,
         },
         .endian = .{
             .url = "git+https://github.com/boostorg/endian#boost-1.91.0",
             .hash = "N-V-__8AAIjJCAB0rSa8lDM8zObP2VbJLgfsKDMHmP3hKLGn",
+            .lazy = true,
         },
         .intrusive = .{
             .url = "git+https://github.com/boostorg/intrusive#boost-1.91.0",
             .hash = "N-V-__8AABJ3JADkCwHInYihwAI1hSS7HYF8jP4p4gGNkUor",
+            .lazy = true,
         },
         .logic = .{
             .url = "git+https://github.com/boostorg/logic#boost-1.91.0",
             .hash = "N-V-__8AADyLAQB5o2e2wLaIFkmW8NQ9NAo0Se1kEokyRggG",
+            .lazy = true,
         },
         .optional = .{
             .url = "git+https://github.com/boostorg/optional#boost-1.91.0",
             .hash = "N-V-__8AAJucBwA0N7ml9KHnsODEDTl7UyOiprbN_jRz6SlP",
+            .lazy = true,
         },
         .smart_ptr = .{
             .url = "git+https://github.com/boostorg/smart_ptr#boost-1.91.0",
             .hash = "N-V-__8AAHKXEwA1h1W5jHCgSbUKzz-QrL3-9epRpI5PszCP",
+            .lazy = true,
         },
         .static_string = .{
             .url = "git+https://github.com/boostorg/static_string#boost-1.91.0",
             .hash = "N-V-__8AAIRNCgBDREm7JBTAZe8oHnSCNh38wJOBAn9uEs8n",
+            .lazy = true,
         },
         .system = .{
             .url = "git+https://github.com/boostorg/system#boost-1.91.0",
             .hash = "N-V-__8AANRhCwAocObCMqNEhODa0sMrfPhn85IrFPAbJn_o",
+            .lazy = true,
         },
         .winapi = .{
             .url = "git+https://github.com/boostorg/winapi#boost-1.91.0",
             .hash = "N-V-__8AAHS7DgDg8VkTxL90eled29PeQTXjwrjFVJVA3UKO",
+            .lazy = true,
         },
         .json = .{
             .url = "git+https://github.com/boostorg/json#boost-1.91.0",
             .hash = "N-V-__8AAK2FLQEm1268qZOC2bKB70D8QA8AMnby8ARjAcww",
+            .lazy = true,
         },
         .io = .{
             .url = "git+https://github.com/boostorg/io#boost-1.91.0",
             .hash = "N-V-__8AAFuJAQDT6Xjpc49iuweYnJ4j4UM3h134E7SjgK2W",
+            .lazy = true,
         },
         .regex = .{
             .url = "git+https://github.com/boostorg/regex#boost-1.91.0",
             .hash = "N-V-__8AADAtOgALiWNEOQK6hAmVZigPOHAqILZ7hzNWwGA4",
+            .lazy = true,
         },
         .variant2 = .{
             .url = "git+https://github.com/boostorg/variant2#boost-1.91.0",
             .hash = "N-V-__8AAIbJBgBHWL8uZEIc8bYTyLDAWzXUryQdLoQpSIg7",
+            .lazy = true,
         },
         .date_time = .{
             .url = "git+https://github.com/boostorg/date_time#boost-1.91.0",
             .hash = "N-V-__8AAMOOGwBP_hCvwzKYcwNojW9urbnpDTOB9e7CFFTD",
+            .lazy = true,
         },
         .outcome = .{
             .url = "git+https://github.com/boostorg/outcome#boost-1.91.0",
             .hash = "N-V-__8AAKC2RQBzamxPJ5cjRI9sYXWdzQjsykLHpaOyxLqE",
+            .lazy = true,
         },
         .hana = .{
             .url = "git+https://github.com/boostorg/hana#boost-1.91.0",
             .hash = "N-V-__8AAIg9TQDdQ2vR5IvCCy4llIYMiArhZrT6i7glL-oz",
+            .lazy = true,
         },
         .numeric_conversion = .{
             .url = "git+https://github.com/boostorg/numeric_conversion#boost-1.91.0",
             .hash = "N-V-__8AACHiCQC1YZI5LZX4OT7n2FGUQSB9SSMSOUX1LMIn",
+            .lazy = true,
         },
         .@"align" = .{
             .url = "git+https://github.com/boostorg/align#boost-1.91.0",
             .hash = "N-V-__8AAIXfAQDfDlF1laA4pGGxIliZXLIkW6lR6_bQh_mh",
+            .lazy = true,
         },
         .graph = .{
             .url = "git+https://github.com/boostorg/graph#boost-1.91.0",
             .hash = "N-V-__8AAPedBgE6M27iCELCBd3vV5OJ8UgeUojSrHfGLLEV",
+            .lazy = true,
         },
         .pfr = .{
             .url = "git+https://github.com/boostorg/pfr#boost-1.91.0",
             .hash = "N-V-__8AAEZGFgD-kYjSaVz6nbNyXEi5SVkQITHjYx4lYo0_",
+            .lazy = true,
         },
         .math = .{
             .url = "git+https://github.com/boostorg/math#boost-1.91.0",
             .hash = "N-V-__8AAPVrsQYTuUIsMzL-6y5y_xj1ZtUCtl5RS4fkdhNZ",
+            .lazy = true,
         },
         .lexical_cast = .{
             .url = "git+https://github.com/boostorg/lexical_cast#boost-1.91.0",
             .hash = "N-V-__8AAEW_BQDL49uX2iHNki2vrOizu1N7wNPRpS7BknCi",
+            .lazy = true,
         },
         .type_index = .{
             .url = "git+https://github.com/boostorg/type_index#boost-1.91.0",
             .hash = "N-V-__8AAINAAwCMtPJpTVMDlBMTvhknqrMBQYvZfl3CFls5",
+            .lazy = true,
         },
         .beast = .{
             .url = "git+https://github.com/boostorg/beast#boost-1.91.0",
             .hash = "N-V-__8AAPkNYAD1OqybLdAQbytG4gIThBmTDZjdc52t_E0q",
+            .lazy = true,
         },
         .variant = .{
             .url = "git+https://github.com/boostorg/variant#boost-1.91.0",
             .hash = "N-V-__8AAIQxCACy2C8sF0J1ExY-xB1I45RHUDAIgCSAM7BJ",
+            .lazy = true,
         },
         .chrono = .{
             .url = "git+https://github.com/boostorg/chrono#boost-1.91.0",
             .hash = "N-V-__8AAJGoEgARrmb4TpJMkjROaauMehaFnXP5AllBPiM3",
+            .lazy = true,
         },
         .unordered = .{
             .url = "git+https://github.com/boostorg/unordered#boost-1.91.0",
             .hash = "N-V-__8AAGK6fAC2FSu-UuwT-H8U9Tc_kZ-uuFCDInyXH-ZC",
+            .lazy = true,
         },
         .url = .{
             .url = "git+https://github.com/boostorg/url#boost-1.91.0",
             .hash = "N-V-__8AAJbyTQDXUSS12r2DyhX673IlDg6RXAvSKvNTDPwE",
+            .lazy = true,
         },
         .any = .{
             .url = "git+https://github.com/boostorg/any#boost-1.91.0",
             .hash = "N-V-__8AACw4AgBGtGm2muG51lMUvnb1hx9zgyL7-SNlay3W",
+            .lazy = true,
         },
         .integer = .{
             .url = "git+https://github.com/boostorg/integer#boost-1.91.0",
             .hash = "N-V-__8AACqmAwB2ZjxMUkUTnE1gdG_flxwLLFJQ8R1r8avy",
+            .lazy = true,
         },
         .array = .{
             .url = "git+https://github.com/boostorg/array#boost-1.91.0",
             .hash = "N-V-__8AAFhRAgB22JLua7M1RueFWPYFlMT1uiKXlTjHbm6q",
+            .lazy = true,
         },
         .multi_array = .{
             .url = "git+https://github.com/boostorg/multi_array#boost-1.91.0",
             .hash = "N-V-__8AAM3NBwD2jma1LSi-7Pxzj4w7gik97j6CM4awjCnO",
+            .lazy = true,
         },
         .safe_numerics = .{
             .url = "git+https://github.com/boostorg/safe_numerics#boost-1.91.0",
             .hash = "N-V-__8AALNNQQCHJ90BqIiWlYmFjpkaEKejVPYEftqw7gIs",
+            .lazy = true,
         },
         .filesystem = .{
             .url = "git+https://github.com/boostorg/filesystem#boost-1.91.0",
             .hash = "N-V-__8AAGHNFwCJ1liQbj2p7S_KN7_rbpW7ioGjsMR7P9jQ",
+            .lazy = true,
         },
         .compute = .{
             .url = "git+https://github.com/boostorg/compute#boost-1.91.0",
             .hash = "N-V-__8AAHSVJwCwvxOOwoNaAhIQqMe3NG80Wk_WAk_inTo2",
+            .lazy = true,
         },
         .mysql = .{
             .url = "git+https://github.com/boostorg/mysql#boost-1.91.0",
             .hash = "N-V-__8AAPBTTAD0vjyTit8baj1SfiNmwzXTb_i7znRG9lCZ",
+            .lazy = true,
         },
         .sort = .{
             .url = "git+https://github.com/boostorg/sort#boost-1.91.0",
             .hash = "N-V-__8AABxKQABasAFZzOfwTreC4x99uixGuK-ZPwSFf5LZ",
+            .lazy = true,
         },
         .stacktrace = .{
             .url = "git+https://github.com/boostorg/stacktrace#boost-1.91.0",
             .hash = "N-V-__8AAJAKBACEeY-Tze2ZWaVg7gP3PBW3YvXjtuviG8JD",
+            .lazy = true,
         },
         .signals2 = .{
             .url = "git+https://github.com/boostorg/signals2#boost-1.91.0",
             .hash = "N-V-__8AAP_MCABSpFdDh-XqpRxRc59keJE_OT9AmLCVb0uY",
+            .lazy = true,
         },
         .interprocess = .{
             .url = "git+https://github.com/boostorg/interprocess#boost-1.91.0",
             .hash = "N-V-__8AAFfyKQAKq7SUa_1KrJEp563zMMWcQz5BA66laDlx",
+            .lazy = true,
         },
         .context = .{
             .url = "git+https://github.com/boostorg/context#boost-1.91.0",
             .hash = "N-V-__8AAJMnGgBasnxRJKbiKroE_Ohnck5MNZZBoDEVz2W-",
+            .lazy = true,
         },
         .timer = .{
             .url = "git+https://github.com/boostorg/timer#boost-1.91.0",
             .hash = "N-V-__8AAGBTAgBqTK9eFPUQtClpOyyCk9T8Uj_i8NuaU6Lw",
+            .lazy = true,
         },
         .wave = .{
             .url = "git+https://github.com/boostorg/wave#boost-1.91.0",
             .hash = "N-V-__8AALO0MwBElcnzmpmvZb57SyPoGw_68--ZJx11tj7o",
+            .lazy = true,
         },
         .atomic = .{
             .url = "git+https://github.com/boostorg/atomic#boost-1.91.0",
             .hash = "N-V-__8AAKhPGwAAIKNXAJ9Hf2lUDaovQaCkk2oC5ud0YtD_",
+            .lazy = true,
         },
         .scope = .{
             .url = "git+https://github.com/boostorg/scope#boost-1.91.0",
             .hash = "N-V-__8AAOFSBgAfhDf6BwrhgNov9NX_v5h_N5kj-ffPiQaK",
+            .lazy = true,
         },
         .process = .{
             .url = "git+https://github.com/boostorg/process#boost-1.91.0",
             .hash = "N-V-__8AAKhkFAC1XEgaZjK6IPMqmA3QkurXaEEdeEPXAdOq",
+            .lazy = true,
         },
         .fusion = .{
             .url = "git+https://github.com/boostorg/fusion#boost-1.91.0",
             .hash = "N-V-__8AAPv37gA_b4IgigeDqrMkEIquX8MYoo5iPqRgcUSj",
+            .lazy = true,
         },
         .spirit = .{
             .url = "git+https://github.com/boostorg/spirit#boost-1.91.0",
             .hash = "N-V-__8AAOBQzgCLvK3LADd-smcB-rcQe-XBbGCyzxLYQWkC",
+            .lazy = true,
         },
         .function = .{
             .url = "git+https://github.com/boostorg/function#boost-1.91.0",
             .hash = "N-V-__8AAJSLBADl0cXLu9AkdD2B6top6pedLuxSK66YBEKZ",
+            .lazy = true,
         },
         .cobalt = .{
             .url = "git+https://github.com/boostorg/cobalt#boost-1.91.0",
             .hash = "N-V-__8AADrQDgCmweQ25Xw8ucAV-0MqKa4FHxbSZKJXD1AZ",
+            .lazy = true,
         },
         .phoenix = .{
             .url = "git+https://github.com/boostorg/phoenix#boost-1.91.0",
             .hash = "N-V-__8AALCYJwGwrs7rO_IvByy6Lt9m7O9-bYLL5JxbWw6M",
+            .lazy = true,
         },
         .locale = .{
             .url = "git+https://github.com/boostorg/locale#boost-1.91.0",
             .hash = "N-V-__8AAMZQGAB1BRg4-DUkDCikfRzwUkXkv2ckSkkZX3Id",
+            .lazy = true,
         },
         .uuid = .{
             .url = "git+https://github.com/boostorg/uuid#boost-1.91.0",
             .hash = "N-V-__8AAGInCACRn-CPWDwqKn2lU2rlcymH4QaSjLzE2uJT",
+            .lazy = true,
         },
         .nowide = .{
             .url = "git+https://github.com/boostorg/nowide#boost-1.91.0",
             .hash = "N-V-__8AAK1NBwACemfe_GMgV_gio33KhFIQ5O3YUeEZaAtj",
+            .lazy = true,
         },
         .circular_buffer = .{
             .url = "git+https://github.com/boostorg/circular_buffer#boost-1.91.0",
             .hash = "N-V-__8AAFWdCABq47DKzD8JFqvHi94XLqiuEYKDAZMqstsE",
+            .lazy = true,
         },
         .leaf = .{
             .url = "git+https://github.com/boostorg/leaf#boost-1.91.0",
             .hash = "N-V-__8AAFUfEQC24Usl80WRGz8dJo_ovQh5kJOH79Dc5Gsg",
+            .lazy = true,
         },
         .lockfree = .{
             .url = "git+https://github.com/boostorg/lockfree#boost-1.91.0",
             .hash = "N-V-__8AAFYkBAArniKOrBGRnVCKNcXp32B3mKNDRwyxDCsA",
+            .lazy = true,
         },
         .redis = .{
             .url = "git+https://github.com/boostorg/redis#boost-1.91.0",
             .hash = "N-V-__8AANroEQCxb8R281ImRa8NCJem2luIu5QHxZb4M_8_",
+            .lazy = true,
         },
         .geometry = .{
             .url = "git+https://github.com/boostorg/geometry#boost-1.91.0",
             .hash = "N-V-__8AAJAifAGNP2QA5G_JM6d60VlicVNl_NCAKIB2MkNf",
+            .lazy = true,
         },
         .crc = .{
             .url = "git+https://github.com/boostorg/crc#boost-1.91.0",
             .hash = "N-V-__8AABTVAwD_LUXFlZRcq-xeCzNz-C5G2okXK1k91_by",
+            .lazy = true,
         },
         .compat = .{
             .url = "git+https://github.com/boostorg/compat#boost-1.91.0",
             .hash = "N-V-__8AAH_lBgAVcs-P6NPkrjC9HcBhJXCI30Mz_EFZF9vl",
+            .lazy = true,
         },
         .bimap = .{
             .url = "git+https://github.com/boostorg/bimap#boost-1.91.0",
             .hash = "N-V-__8AAAwxMAB3u9Cn3TZXdJpewIzcUxqEcp_kl2VoF62c",
+            .lazy = true,
         },
         .tokenizer = .{
             .url = "git+https://github.com/boostorg/tokenizer#boost-1.91.0",
             .hash = "N-V-__8AAMjfAQCFd7AbC0oR2nywxgUAoeLd1PnpMKIv7gtL",
+            .lazy = true,
         },
         .parameter = .{
             .url = "git+https://github.com/boostorg/parameter#boost-1.91.0",
             .hash = "N-V-__8AAKjNHABFfpD1wClYVKZjyJq0cm5oroGvoJvRWvi2",
+            .lazy = true,
         },
         .callable_traits = .{
             .url = "git+https://github.com/boostorg/callable_traits#boost-1.91.0",
             .hash = "N-V-__8AAMa4BwCpVigub7aSIEgUJohLziOJXDmB3igMP7M8",
+            .lazy = true,
         },
         .odeint = .{
             .url = "git+https://github.com/boostorg/odeint#boost-1.91.0",
             .hash = "N-V-__8AAP2nJAD_1ObVluxv_7m6YXq7uWT_m4m8-wfjnJnp",
+            .lazy = true,
         },
         .ublas = .{
             .url = "git+https://github.com/boostorg/ublas#boost-1.91.0",
             .hash = "N-V-__8AAK5-OwAjoTGZtX_qcfh6hQDM2cbkRbPXD7fxu8hY",
+            .lazy = true,
         },
         .serialization = .{
             .url = "git+https://github.com/boostorg/serialization#boost-1.91.0",
             .hash = "N-V-__8AADOvIQDs5dJOPykAvU8G7JkELrGnc7C0MD4eeFxk",
+            .lazy = true,
         },
         .iostreams = .{
             .url = "git+https://github.com/boostorg/iostreams#boost-1.91.0",
             .hash = "N-V-__8AAP7ShQAWn6iRyUC63mFATItHVQlvNXxgiO--YbLh",
+            .lazy = true,
         },
         .type_erasure = .{
             .url = "git+https://github.com/boostorg/type_erasure#boost-1.91.0",
             .hash = "N-V-__8AAP5SDQBITJgI5Jcyk3yGlFe0b_TqZIsjDZUydiC6",
+            .lazy = true,
         },
         .typeof = .{
             .url = "git+https://github.com/boostorg/typeof#boost-1.91.0",
             .hash = "N-V-__8AANChAQB8TbUQZUmIyYSmJG0hlk-wl8Fpcg3dFaJf",
+            .lazy = true,
         },
         .units = .{
             .url = "git+https://github.com/boostorg/units#boost-1.91.0",
             .hash = "N-V-__8AAByoEQDncSEY-86N_sU4nPGlMojswOKyczSExYyr",
+            .lazy = true,
         },
         .function_types = .{
             .url = "git+https://github.com/boostorg/function_types#boost-1.91.0",
             .hash = "N-V-__8AAIuADwB_PpV03lnF7D8GsRazJy0JdaQDuiasQH0-",
+            .lazy = true,
         },
         .hof = .{
             .url = "git+https://github.com/boostorg/hof#boost-1.91.0",
             .hash = "N-V-__8AALKyCwA3vPUL9O__Q4y3m193L6sycgS9J03KBzsm",
+            .lazy = true,
         },
         .interval = .{
             .url = "git+https://github.com/boostorg/interval#boost-1.91.0",
             .hash = "N-V-__8AAOcqBgCjVx44TGNIZqZmmmh4SxKrojvMXUPwkc_3",
+            .lazy = true,
         },
         .icl = .{
             .url = "git+https://github.com/boostorg/icl#boost-1.91.0",
             .hash = "N-V-__8AACHFgAAL6MnwPXMGH4XFiUWfVG2ZZsaSiCUlKW3P",
+            .lazy = true,
         },
         .local_function = .{
             .url = "git+https://github.com/boostorg/local_function#boost-1.91.0",
             .hash = "N-V-__8AAHGaFQDt5k8TphnVwa6vACn9SjMFY-sjx1bHeyhn",
+            .lazy = true,
         },
         .log = .{
             .url = "git+https://github.com/boostorg/log#boost-1.91.0",
             .hash = "N-V-__8AAPBbNQA-ISS6SZXdxHml7L3F0DwNDd2w8vwb7W53",
+            .lazy = true,
         },
         .charconv = .{
             .url = "git+https://github.com/boostorg/charconv#boost-1.91.0",
             .hash = "N-V-__8AAIihFwB9-Gib7OaCsD2sEabYirI6HT0jBwdQEg2-",
+            .lazy = true,
         },
         .conversion = .{
             .url = "git+https://github.com/boostorg/conversion#boost-1.91.0",
             .hash = "N-V-__8AAI7QAACAxRd82M0dK-w25c9aGSJCAFvvn5zNjGma",
+            .lazy = true,
         },
         .heap = .{
             .url = "git+https://github.com/boostorg/heap#boost-1.91.0",
             .hash = "N-V-__8AAFf6BQAGXBKEfNLLMPdOrTs8SOgRqHi2tesJKsP0",
+            .lazy = true,
         },
         .msm = .{
             .url = "git+https://github.com/boostorg/msm#boost-1.91.0",
             .hash = "N-V-__8AADIoNwDSYHHbLfzXz6Wu9sETfG5sde8vBuEICNgd",
+            .lazy = true,
         },
         .coroutine2 = .{
             .url = "git+https://github.com/boostorg/coroutine2#boost-1.91.0",
             .hash = "N-V-__8AADeWBACdc4-qLylEme_d0C7JkljJh5TukDftAjNI",
+            .lazy = true,
         },
         .pool = .{
             .url = "git+https://github.com/boostorg/pool#boost-1.91.0",
             .hash = "N-V-__8AAAieLgDl61ANGt1eaCLj0oYtzF3PZ5Wzzr-1bD3s",
+            .lazy = true,
         },
         .format = .{
             .url = "git+https://github.com/boostorg/format#boost-1.91.0",
             .hash = "N-V-__8AAGu-BABbjN6CgUc_0vHRqCMd3v7bNbI_zPUWZimO",
+            .lazy = true,
         },
         .fiber = .{
             .url = "git+https://github.com/boostorg/fiber#boost-1.91.0",
             .hash = "N-V-__8AAAYbSABEngHJeWbJCaDFDOxpNEIStZP1Bm5i6LR5",
+            .lazy = true,
         },
         .proto = .{
             .url = "git+https://github.com/boostorg/proto#boost-1.91.0",
             .hash = "N-V-__8AALk3LQBlkEzYhWvZ8AwAdWeNGE01AvL_-CFUUhAL",
+            .lazy = true,
         },
         .property_tree = .{
             .url = "git+https://github.com/boostorg/property_tree#boost-1.91.0",
             .hash = "N-V-__8AAJU4CgBE2hI0WWsd-50CUeKioI39aQvx2zyUessH",
+            .lazy = true,
         },
         .exception = .{
             .url = "git+https://github.com/boostorg/exception#boost-1.91.0",
             .hash = "N-V-__8AAJpSCABENao4i0c-3WqjbKraMjvoRrKjy-_Sjkda",
+            .lazy = true,
         },
         .multi_index = .{
             .url = "git+https://github.com/boostorg/multi_index#boost-1.91.0",
             .hash = "N-V-__8AAEtRIgCw7iI9ullZ8l4Giir5AXEeJSeZ3Nt1xaMG",
+            .lazy = true,
         },
         .random = .{
             .url = "git+https://github.com/boostorg/random#boost-1.91.0",
             .hash = "N-V-__8AANyOGADYRZFI0NkuKYu766EMkC8ZqdkRHl32PtZC",
+            .lazy = true,
         },
         .dll = .{
             .url = "git+https://github.com/boostorg/dll#boost-1.91.0",
             .hash = "N-V-__8AAIwbBwBY3z14Eyp-7gro_WMzKCJKUyprr2z39ml0",
+            .lazy = true,
         },
         .multiprecision = .{
             .url = "git+https://github.com/boostorg/multiprecision#boost-1.91.0",
             .hash = "N-V-__8AAC_W3ADMTY5zb2s8l0yYLhaNsJq-pWoAiYXGAKWX",
+            .lazy = true,
         },
         .gil = .{
             .url = "git+https://github.com/boostorg/gil#boost-1.91.0",
             .hash = "N-V-__8AADAIowC-KLsnUYL_MadXV7IbIpj4gAkIKriyHGqs",
+            .lazy = true,
         },
         .python = .{
             .url = "git+https://github.com/boostorg/python#boost-1.91.0",
             .hash = "N-V-__8AABvUIABPwf86WKUIo_7vptqALtX07qf3MvDC9jQ9",
+            .lazy = true,
         },
         .property_map = .{
             .url = "git+https://github.com/boostorg/property_map#boost-1.91.0",
             .hash = "N-V-__8AAGwFAwBex2K0N82xFznF3RELef8GN46eaci0oHgC",
+            .lazy = true,
         },
         .property_map_parallel = .{
             .url = "git+https://github.com/boostorg/property_map_parallel#boost-1.91.0",
             .hash = "N-V-__8AABU3AQBK3_JOUTquItF8e4uT9uD9GngMd3j3eyRw",
+            .lazy = true,
         },
         .hash2 = .{
             .url = "git+https://github.com/boostorg/hash2#boost-1.91.0",
             .hash = "N-V-__8AACGHDwAVWnJ0qffZ7vsUYsQlose7J6DfPmmk4oc-",
+            .lazy = true,
         },
         .parser = .{
             .url = "git+https://github.com/boostorg/parser#boost-1.91.0",
             .hash = "N-V-__8AANQcMADYb2HHOJGJUxk60A393RmXINdb9uM3kshh",
+            .lazy = true,
         },
         .mqtt5 = .{
             .url = "git+https://github.com/boostorg/mqtt5#boost-1.91.0",
             .hash = "N-V-__8AAPpTDgBsiDW4emWpRzEJhtKA33tuBq6ElN0lrUs1",
+            .lazy = true,
         },
         .bloom = .{
             .url = "git+https://github.com/boostorg/bloom#boost-1.91.0",
             .hash = "N-V-__8AABIGCAB3UMfGvexVPi51jRyoMdix2Eqgcse3KsU5",
+            .lazy = true,
         },
         .tti = .{
             .url = "git+https://github.com/boostorg/tti#boost-1.91.0",
             .hash = "N-V-__8AAOZmCADODeMFdbLe1jAS_JVYPMQ3d3Jc3JyfDul9",
+            .lazy = true,
         },
         .openmethod = .{
             .url = "git+https://github.com/boostorg/openmethod#boost-1.91.0",
             .hash = "N-V-__8AAHfqSQBgEvkngqbxyXbdRwXNi1QzyJM--ItiQL9z",
+            .lazy = true,
         },
     },
     .paths = .{""},
