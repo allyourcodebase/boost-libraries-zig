@@ -65,6 +65,8 @@ fn buildTests(b: *std.Build, options: struct {
         exe.root_module.addCMacro("_GNU_SOURCE", "");
     } else {
         exe.root_module.link_libc = true;
+        // Disable auto-linking.
+        exe.root_module.addCMacro("BOOST_ALL_NO_LIB", "");
     }
 
     // for boost::asio/boost::beast/boost::cobalt
