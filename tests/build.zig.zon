@@ -1,7 +1,7 @@
 .{
     .name = .tests,
     .fingerprint = 0x1260fc5ecdd6479c,
-    .minimum_zig_version = "0.14.0",
+    .minimum_zig_version = "0.17.0",
     .version = "0.0.0",
     .dependencies = .{
         .boost = .{

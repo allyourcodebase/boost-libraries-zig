@@ -511,7 +511,7 @@ fn buildFileSystem(b: *std.Build, obj: *std.Build.Step.Compile) void {
 
 fn buildContext(b: *std.Build, obj: *std.Build.Step.Compile) void {
     const contextPath = b.dependency("context", .{}).path("src");
-    const ctxPath = contextPath.getPath(b);
+    const ctxPath = contextPath.dependency.sub_path;
     obj.root_module.addIncludePath(.{
         .cwd_relative = b.pathJoin(&.{ ctxPath, "asm" }),
     }); // common.h

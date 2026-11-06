@@ -1,7 +1,7 @@
 .{
     .name = .boost_libraries,
     .fingerprint = 0x47452d961c0ab97e,
-    .minimum_zig_version = "0.16.0",
+    .minimum_zig_version = "0.17.0",
     .version = "1.91.0",
     .dependencies = .{
         .core = .{
