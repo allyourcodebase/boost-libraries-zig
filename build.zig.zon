@@ -508,6 +508,10 @@
             .url = "git+https://github.com/boostorg/openmethod#boost-1.91.0",
             .hash = "N-V-__8AAHfqSQBgEvkngqbxyXbdRwXNi1QzyJM--ItiQL9z",
         },
+        .lambda = .{
+            .url = "git+https://github.com/boostorg/lambda#boost-1.91.0",
+            .hash = "N-V-__8AAOZmDABiJmZD1HOoyz8A7KWOd9qeMux49xdFhbVC",
+        },
     },
     .paths = .{""},
 }

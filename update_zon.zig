@@ -172,4 +172,5 @@ const git_urls = [_][]const u8{
     "git+https://github.com/boostorg/tti#" ++ boost_version,
     "git+https://github.com/boostorg/bloom#" ++ boost_version,
     "git+https://github.com/boostorg/openmethod#" ++ boost_version,
+    "git+https://github.com/boostorg/lambda#" ++ boost_version,
 };

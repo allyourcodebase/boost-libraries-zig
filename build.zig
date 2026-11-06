@@ -126,6 +126,7 @@ const boost_libs = [_][]const u8{
     "tti",
     "bloom",
     "openmethod",
+    "lambda",
 };
 
 pub fn build(b: *std.Build) !void {
