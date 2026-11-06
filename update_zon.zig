@@ -2,7 +2,7 @@ const std = @import("std");
 const process = std.process;
 const fmt = std.fmt;
 
-const boost_version = "boost-1.91.0";
+const boost_version = "boost-1.92.0";
 
 pub fn main(init: std.process.Init) !void {
     const allocator = init.gpa;

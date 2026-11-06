@@ -12,7 +12,7 @@ Replacing the [CMake](https://cmake.org/) and [B2](https://www.bfgroup.xyz/b2/) 
 
 ### Requirements
 
-- [zig](https://ziglang.org/download) v0.16.0 or master
+- [zig](https://ziglang.org/download) v0.17.0 or master
 
 ## How to use
 
